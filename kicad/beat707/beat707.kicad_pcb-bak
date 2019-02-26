@@ -106,7 +106,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C748062)
-    (at 158.67 144.78 90)
+    (at 152.4 137.16 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C65184E/5C6550AD)
@@ -137,7 +137,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C748038)
-    (at 171.37 144.78 90)
+    (at 170.18 139.7 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C65184E/5C6551C1)
@@ -168,7 +168,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C8524AA)
-    (at 87.55 186.69 90)
+    (at 322.58 134.62 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C65184E/5C65528E)
@@ -198,8 +198,8 @@
     )
   )
 
-  (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C75B823)
-    (at 311.15 186.69 90)
+  (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C8524B9)
+    (at 322.5 153.416 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C65184E/5C655294)
@@ -229,8 +229,8 @@
     )
   )
 
-  (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C75B7F9)
-    (at 323.85 186.69 90)
+  (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C8524C8)
+    (at 81.28 162.56 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C65184E/5C65537C)
@@ -261,7 +261,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C8524D7)
-    (at 81.2 144.76 90)
+    (at 320.04 172.72 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C65184E/5C655382)
@@ -292,7 +292,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C74800E)
-    (at 239.95 144.78 90)
+    (at 236.14 134.62 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C65184E/5C655388)
@@ -322,8 +322,8 @@
     )
   )
 
-  (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C7582D0)
-    (at 74.93 186.69 90)
+  (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C8524F5)
+    (at 81.28 190.5 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C65184E/5C65538E)
@@ -354,7 +354,7 @@
   )
 
   (module Display_7Segment:CA56-12EWA (layer F.Cu) (tedit 5A02FE84) (tstamp 5C743F49)
-    (at 256.54 150.622 90)
+    (at 251.46 140.97 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C65184E/5C651F7C)
@@ -403,7 +403,7 @@
   )
 
   (module Display_7Segment:CA56-12EWA (layer F.Cu) (tedit 5A02FE84) (tstamp 5C8526D3)
-    (at 104.14 150.622 90)
+    (at 99.06 142.24 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C65184E/5C6555F4)
@@ -452,7 +452,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C745DBC)
-    (at 104.06 195.58 90)
+    (at 99.06 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6557AC/5C6550AD)
@@ -462,19 +462,19 @@
     (fp_text value SW_Push (at 3.71 -6.55 90) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_line (start -4.42 -9.16) (end -3.42 -10.16) (layer F.Fab) (width 0.1))
-    (fp_line (start -3.42 -10.16) (end -4.42 -11.16) (layer F.Fab) (width 0.1))
+    (fp_line (start -1.6 -18.7) (end 10.4 -18.7) (layer F.SilkS) (width 0.15))
+    (fp_line (start 10.4 -18.7) (end 10.4 -6.7) (layer F.SilkS) (width 0.15))
+    (fp_line (start 10.4 -6.7) (end -1.6 -6.7) (layer F.SilkS) (width 0.15))
+    (fp_line (start -1.6 -6.7) (end -1.6 -18.7) (layer F.SilkS) (width 0.15))
     (fp_text user %R (at 3.71 -11.63 90) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_line (start -1.6 -6.7) (end -1.6 -18.7) (layer F.SilkS) (width 0.15))
-    (fp_line (start 10.4 -6.7) (end -1.6 -6.7) (layer F.SilkS) (width 0.15))
-    (fp_line (start 10.4 -18.7) (end 10.4 -6.7) (layer F.SilkS) (width 0.15))
-    (fp_line (start -1.6 -18.7) (end 10.4 -18.7) (layer F.SilkS) (width 0.15))
-    (pad 1 smd rect (at -2.54 -10.16 90) (size 2 1.3) (layers F.Cu F.Paste F.Mask))
-    (pad 2 smd rect (at 11.41 -10.16 90) (size 2 1.3) (layers F.Cu F.Paste F.Mask))
-    (pad 3 smd rect (at 11.41 -15.16 90) (size 2 1.3) (layers F.Cu F.Paste F.Mask))
+    (fp_line (start -3.42 -10.16) (end -4.42 -11.16) (layer F.Fab) (width 0.1))
+    (fp_line (start -4.42 -9.16) (end -3.42 -10.16) (layer F.Fab) (width 0.1))
     (pad 4 smd rect (at -2.54 -15.16 90) (size 2 1.3) (layers F.Cu F.Paste F.Mask))
+    (pad 3 smd rect (at 11.41 -15.16 90) (size 2 1.3) (layers F.Cu F.Paste F.Mask))
+    (pad 2 smd rect (at 11.41 -10.16 90) (size 2 1.3) (layers F.Cu F.Paste F.Mask))
+    (pad 1 smd rect (at -2.54 -10.16 90) (size 2 1.3) (layers F.Cu F.Paste F.Mask))
     (model button.wrl
       (offset (xyz 4.4 12.7 2))
       (scale (xyz 0.3937 0.3937 0.3937))
@@ -483,7 +483,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C745D92)
-    (at 116.76 195.58 90)
+    (at 111.76 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6557AC/5C6551C1)
@@ -514,7 +514,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C745D68)
-    (at 129.46 195.58 90)
+    (at 124.46 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6557AC/5C65528E)
@@ -545,7 +545,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C745D3E)
-    (at 142.16 195.58 90)
+    (at 137.16 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6557AC/5C655294)
@@ -576,7 +576,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C745D14)
-    (at 154.86 195.58 90)
+    (at 149.86 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6557AC/5C65537C)
@@ -607,7 +607,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C7462EA)
-    (at 167.56 195.58 90)
+    (at 162.56 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6557AC/5C655382)
@@ -638,7 +638,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C7462C0)
-    (at 180.26 195.58 90)
+    (at 175.26 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6557AC/5C655388)
@@ -669,7 +669,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C746296)
-    (at 192.96 195.58 90)
+    (at 187.96 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6557AC/5C65538E)
@@ -700,7 +700,7 @@
   )
 
   (module Display_7Segment:CA56-12EWA (layer F.Cu) (tedit 5A02FE84) (tstamp 5C864FB0)
-    (at 104.14 170.18 90)
+    (at 99.06 164.084 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6557AC/5C651F7C)
@@ -749,7 +749,7 @@
   )
 
   (module Display_7Segment:CA56-12EWA (layer F.Cu) (tedit 5A02FE84) (tstamp 5C864FD1)
-    (at 154.94 170.18 90)
+    (at 149.86 164.084 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6557AC/5C6555F4)
@@ -798,7 +798,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C74626C)
-    (at 205.66 195.58 90)
+    (at 200.66 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6559D3/5C6550AD)
@@ -829,7 +829,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C746242)
-    (at 218.36 195.58 90)
+    (at 213.36 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6559D3/5C6551C1)
@@ -860,7 +860,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C746218)
-    (at 231.06 195.58 90)
+    (at 226.06 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6559D3/5C65528E)
@@ -891,7 +891,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C7461EE)
-    (at 243.76 195.58 90)
+    (at 238.76 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6559D3/5C655294)
@@ -922,7 +922,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C7461C4)
-    (at 256.46 195.58 90)
+    (at 251.46 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6559D3/5C65537C)
@@ -953,7 +953,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C74619A)
-    (at 269.16 195.58 90)
+    (at 264.16 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6559D3/5C655382)
@@ -984,7 +984,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C746170)
-    (at 281.86 195.58 90)
+    (at 276.86 188.976 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6559D3/5C655388)
@@ -1015,7 +1015,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C746146)
-    (at 294.56 195.58 90)
+    (at 289.607 188.956 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6559D3/5C65538E)
@@ -1046,7 +1046,7 @@
   )
 
   (module Display_7Segment:CA56-12EWA (layer F.Cu) (tedit 5A02FE84) (tstamp 5C8841B0)
-    (at 256.54 170.18 90)
+    (at 251.46 164.084 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6559D3/5C651F7C)
@@ -1095,7 +1095,7 @@
   )
 
   (module Display_7Segment:CA56-12EWA (layer F.Cu) (tedit 5A02FE84) (tstamp 5C8841D1)
-    (at 205.74 170.18 90)
+    (at 200.66 164.084 90)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C6559D3/5C6555F4)
@@ -1210,7 +1210,7 @@
   )
 
   (module Connector_USB:USB_B_OST_USB-B1HSxx_Horizontal (layer F.Cu) (tedit 5AFE01FF) (tstamp 5C9D9C4B)
-    (at 67.31 85.09 90)
+    (at 90.17 86.36 90)
     (descr "USB B receptacle, Horizontal, through-hole, http://www.on-shore.com/wp-content/uploads/2015/09/usb-b1hsxx.pdf")
     (tags "USB-B receptacle horizontal through-hole")
     (path /5C655E8B)
@@ -1257,7 +1257,7 @@
   )
 
   (module Connector_Audio:Jack_3.5mm_PJ311_Horizontal (layer F.Cu) (tedit 5A1DBF1B) (tstamp 5C9D9CB1)
-    (at 89.662 78.994)
+    (at 115.57 80.01)
     (descr "PJ311 6pin SMD 3.5mm stereo headphones jack.")
     (tags "headphones jack plug stereo 3.5mm PJ311")
     (path /5C6560D3)
@@ -1356,7 +1356,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C74842B)
-    (at 201.93 135.91 270)
+    (at 195.58 125.75 270)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C74CDB9)
@@ -1386,8 +1386,8 @@
     )
   )
 
-  (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C759CBD)
-    (at 173.99 135.89 270)
+  (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C74871D)
+    (at 287.1 181.63 270)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C74CDF8)
@@ -1418,7 +1418,7 @@
   )
 
   (module beat707:K2-1103SP-A4SW-04 (layer F.Cu) (tedit 5C652A37) (tstamp 5C7F2ECB)
-    (at 55.88 157.48 270)
+    (at 55.88 129.54 270)
     (descr "4 digit 7 segment green LED, http://www.kingbrightusa.com/images/catalog/SPEC/CA56-12EWA.pdf")
     (tags "4 digit 7 segment green LED")
     (path /5C74CE2B)
@@ -1448,8 +1448,8 @@
     )
   )
 
-  (module Rotary_Encoder:RotaryEncoder_Alps_EC12E_Vertical_H20mm (layer F.Cu) (tedit 5A64F4AE) (tstamp 5C75B861)
-    (at 302.26 160.02 90)
+  (module Rotary_Encoder:RotaryEncoder_Alps_EC12E_Vertical_H20mm (layer F.Cu) (tedit 5A64F4AE) (tstamp 5C7F2EEE)
+    (at 289.56 147.32 90)
     (descr "Alps rotary encoder, EC12E..., vertical shaft, http://www.alps.com/prod/info/E/HTML/Encoder/Incremental/EC12E/EC12E1240405.html")
     (tags "rotary encoder")
     (path /5C74D2CA)
@@ -1500,7 +1500,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C74875E)
-    (at 80.01 135.636)
+    (at 289.56 157.48)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C65184E/5C651D10)
@@ -1533,7 +1533,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C72C078)
-    (at 80.01 140.716)
+    (at 289.56 162.56)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C65184E/5C651D16)
@@ -1566,7 +1566,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C72C08A)
-    (at 80.01 145.796)
+    (at 289.56 167.64)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C65184E/5C651D1C)
@@ -1599,7 +1599,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C72C09C)
-    (at 80.01 150.876)
+    (at 289.56 172.72)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C65184E/5C651D22)
@@ -1632,7 +1632,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C7466EF)
-    (at 90.17 177.8)
+    (at 85.09 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6557AC/5C65190B)
@@ -1665,7 +1665,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C745EF8)
-    (at 102.87 177.8)
+    (at 97.79 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6557AC/5C651998)
@@ -1698,7 +1698,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C745EC2)
-    (at 115.57 177.8)
+    (at 110.49 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6557AC/5C651AE4)
@@ -1731,7 +1731,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C745E8C)
-    (at 128.27 177.8)
+    (at 123.19 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6557AC/5C651AEA)
@@ -1764,7 +1764,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C745E56)
-    (at 140.97 177.8)
+    (at 135.89 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6557AC/5C651D10)
@@ -1797,7 +1797,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C745E20)
-    (at 153.67 177.8)
+    (at 148.59 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6557AC/5C651D16)
@@ -1830,7 +1830,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C745DEA)
-    (at 166.37 177.8)
+    (at 161.29 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6557AC/5C651D1C)
@@ -1863,7 +1863,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C746114)
-    (at 179.07 177.8)
+    (at 173.99 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6557AC/5C651D22)
@@ -1896,7 +1896,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C7460DE)
-    (at 191.77 177.8)
+    (at 186.69 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6559D3/5C65190B)
@@ -1929,7 +1929,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C7460A8)
-    (at 204.47 177.8)
+    (at 199.39 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6559D3/5C651998)
@@ -1962,7 +1962,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C746072)
-    (at 217.17 177.8)
+    (at 212.09 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6559D3/5C651AE4)
@@ -1995,7 +1995,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C74603C)
-    (at 229.87 177.8)
+    (at 224.79 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6559D3/5C651AEA)
@@ -2028,7 +2028,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C746006)
-    (at 242.57 177.8)
+    (at 237.49 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6559D3/5C651D10)
@@ -2061,7 +2061,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C745FD0)
-    (at 255.27 177.8)
+    (at 250.19 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6559D3/5C651D16)
@@ -2094,7 +2094,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C745F9A)
-    (at 267.97 177.8)
+    (at 262.89 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6559D3/5C651D1C)
@@ -2127,7 +2127,7 @@
   )
 
   (module LED_THT:LED_D3.0mm (layer F.Cu) (tedit 587A3A7B) (tstamp 5C745F64)
-    (at 280.67 177.8)
+    (at 275.59 171.45)
     (descr "LED, diameter 3.0mm, 2 pins")
     (tags "LED diameter 3.0mm 2 pins")
     (path /5C6559D3/5C651D22)
