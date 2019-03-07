@@ -1,9 +1,14 @@
 EESchema-DOCLIB  Version 2.0
 #
-$CMP CA56-12CGKWA
+$CMP SR420561N
 D 4 digit 7 segment Green LED, common anode
 K display LED
 F http://www.kingbright.com/attachments/file/psearch/000/00/00/CA56-12CGKWA(Ver.9A).pdf
+$ENDCMP
+#
+$CMP TM1638
+D TM1638
+F https://www.futurashop.it/image/catalog/data/Download/TM1638_V1.3_EN.pdf
 $ENDCMP
 #
 #End Doc Library

@@ -55,10 +55,10 @@ F 3 " ~" H 7150 2700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:AudioJack3_Ground J3
+L Connector:AudioJack3_Ground J2
 U 1 1 5C6560D3
 P 8000 5150
-F 0 "J3" H 8004 5492 50  0000 C CNN
+F 0 "J2" H 8004 5492 50  0000 C CNN
 F 1 "AudioJack3_Ground" H 8004 5401 50  0000 C CNN
 F 2 "Connector_Audio:Jack_3.5mm_PJ311_Horizontal" H 8000 5150 50  0001 C CNN
 F 3 "~" H 8000 5150 50  0001 C CNN
@@ -66,10 +66,10 @@ F 3 "~" H 8000 5150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:DIN-5_180degree J2
+L Connector:DIN-5_180degree J3
 U 1 1 5C65661A
 P 8550 2800
-F 0 "J2" H 8550 2526 50  0000 C CNN
+F 0 "J3" H 8550 2526 50  0000 C CNN
 F 1 "DIN-5_180degree" H 8550 2435 50  0000 C CNN
 F 2 "beat707:DIN-Socket" H 8550 2800 50  0001 C CNN
 F 3 "http://www.mouser.com/ds/2/18/40_c091_abd_e-75918.pdf" H 8550 2800 50  0001 C CNN
@@ -94,8 +94,8 @@ P 3350 2650
 AR Path="/5C65184E/5C74CDB9" Ref="SW?"  Part="1" 
 AR Path="/5C6557AC/5C74CDB9" Ref="SW?"  Part="1" 
 AR Path="/5C6559D3/5C74CDB9" Ref="SW?"  Part="1" 
-AR Path="/5C74CDB9" Ref="SW25"  Part="1" 
-F 0 "SW25" H 3350 2935 50  0000 C CNN
+AR Path="/5C74CDB9" Ref="SW1"  Part="1" 
+F 0 "SW1" H 3350 2935 50  0000 C CNN
 F 1 "SW_Push" H 3350 2844 50  0000 C CNN
 F 2 "beat707:K2-1103SP-A4SW-04" H 3350 2850 50  0001 C CNN
 F 3 "" H 3350 2850 50  0001 C CNN
@@ -109,8 +109,8 @@ P 3350 3200
 AR Path="/5C65184E/5C74CDF8" Ref="SW?"  Part="1" 
 AR Path="/5C6557AC/5C74CDF8" Ref="SW?"  Part="1" 
 AR Path="/5C6559D3/5C74CDF8" Ref="SW?"  Part="1" 
-AR Path="/5C74CDF8" Ref="SW26"  Part="1" 
-F 0 "SW26" H 3350 3485 50  0000 C CNN
+AR Path="/5C74CDF8" Ref="SW2"  Part="1" 
+F 0 "SW2" H 3350 3485 50  0000 C CNN
 F 1 "SW_Push" H 3350 3394 50  0000 C CNN
 F 2 "beat707:K2-1103SP-A4SW-04" H 3350 3400 50  0001 C CNN
 F 3 "" H 3350 3400 50  0001 C CNN
@@ -124,8 +124,8 @@ P 3400 3750
 AR Path="/5C65184E/5C74CE2B" Ref="SW?"  Part="1" 
 AR Path="/5C6557AC/5C74CE2B" Ref="SW?"  Part="1" 
 AR Path="/5C6559D3/5C74CE2B" Ref="SW?"  Part="1" 
-AR Path="/5C74CE2B" Ref="SW27"  Part="1" 
-F 0 "SW27" H 3400 4035 50  0000 C CNN
+AR Path="/5C74CE2B" Ref="SW3"  Part="1" 
+F 0 "SW3" H 3400 4035 50  0000 C CNN
 F 1 "SW_Push" H 3400 3944 50  0000 C CNN
 F 2 "beat707:K2-1103SP-A4SW-04" H 3400 3950 50  0001 C CNN
 F 3 "" H 3400 3950 50  0001 C CNN
@@ -133,14 +133,14 @@ F 3 "" H 3400 3950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:Rotary_Encoder SW28
-U 1 1 5C74D2CA
-P 7000 3750
-F 0 "SW28" H 7229 3796 50  0000 L CNN
-F 1 "Rotary_Encoder" H 7229 3705 50  0000 L CNN
-F 2 "Rotary_Encoder:RotaryEncoder_Alps_EC12E_Vertical_H20mm" H 6850 3910 50  0001 C CNN
-F 3 "~" H 7000 4010 50  0001 C CNN
-	1    7000 3750
+L Device:Rotary_Encoder_Switch SW4
+U 1 1 5C812DB9
+P 7000 3900
+F 0 "SW4" H 7000 4267 50  0000 C CNN
+F 1 "Rotary_Encoder_Switch" H 7000 4176 50  0000 C CNN
+F 2 "Rotary_Encoder:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm" H 6850 4060 50  0001 C CNN
+F 3 "~" H 7000 4160 50  0001 C CNN
+	1    7000 3900
 	1    0    0    -1  
 $EndComp
 $EndSCHEMATC
