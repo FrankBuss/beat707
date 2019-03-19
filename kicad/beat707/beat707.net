@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/frank/data/projects/beat707/kicad/beat707/beat707.sch)
-    (date "Fri 15 Mar 2019 09:31:04 PM CET")
+    (date "Sat 16 Mar 2019 09:30:34 PM CET")
     (tool "Eeschema (5.0.1-dev-36-g831978293)")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
