@@ -1,3 +1,4 @@
 (sym_lib_table
-  (lib (name beat707-rescue)(type Legacy)(uri ${KIPRJMOD}/beat707-rescue.lib)(options "")(descr ""))
+  (lib (name beat707)(type Legacy)(uri ${KIPRJMOD}/beat707.lib)(options "")(descr ""))
+  (lib (name switch)(type Legacy)(uri ${KIPRJMOD}/switch.lib)(options "")(descr ""))
 )
