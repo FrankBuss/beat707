@@ -61,7 +61,7 @@ enum
         lastMenu = menuMIDIinPattern,
   //
   kLeftMain = 0,
-  kMemoryProtectMessage = 0, kPatternRepeatMessage,
+  kMemoryProtectMessage = 0, kPatternRepeatMessage, kVersionNumberMessage,
   kRepeatModeNormal = 0, kRepeatModeChain, kRepeatModePattern
 };
 
@@ -134,6 +134,7 @@ byte tickOutCounter = 0;
 byte tickOutCounterLen = 0;
 bool tickOutPinState = false;
 bool isSelectingBank = false;
+bool showVersion = true;
 //
 #if RECORD_ENABLED_ECHO
   bool lateSequencerTick = false;

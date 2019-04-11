@@ -131,6 +131,14 @@ void createScreen()
     else if (showTemporaryMessage == kPatternRepeatMessage)
     {
     }
+    else if (showTemporaryMessage == kVersionNumberMessage)
+    {
+      segments[1][0] = S_U;
+      segments[1][1] = S_E;
+      segments[1][2] = S_R;
+      //
+      printNumber(1, 4, VERSION_NUMBER);
+    }
     //
     temporaryMessageCounter++;
     if (temporaryMessageCounter >= TEMPORARY_MESSAGE_TIME)  temporaryMessageCounter = 0;

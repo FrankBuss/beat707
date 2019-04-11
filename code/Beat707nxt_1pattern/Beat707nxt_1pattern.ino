@@ -8,13 +8,13 @@
  * 
  *  List of Changes
  *  
- *  - 04/11/2019 B
+ *  V0001 - 04/11/2019
  *    * Fixed the MIDI Input Echo code so it doesn't conflicts with the sequencer interrupt. Before I start sending the note echo I set a variable that tells the sequencer interrupt to perform after I finish up sending the 3 bytes of MIDI information from the note on/off messages.
  *  
- *  - 04/11/2019 A
+ *  V0000 - 04/11/2019
  *    * Improved the midi buffer output, using a faster code so notes are output faster. The code buffers the next tick of the sequencer ahead of time, so when the time comes to output the notes everything is already set in a buffer that is output quickly. The heavy task of "rendering" the next notes are always done after the current buffer is output to the MIDI interface (UART).
  * 
- *  - 04/10/2019
+ *  V0000 - 04/10/2019
  *    * Initial Release: removed all flash and spi code. Didn't update the interface, so it will still show the pattern selector but when trying to change a pattern it will do nothing.
  *  
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -32,6 +32,8 @@
 #define EXTERNAL_CLOCK 0      // When set external clock is set by default
 #define EXTERNAL_CONTINUE 0   // When set will use it to continue the sequener clock
 #define TRACK_DEBUG_MIDI 0    // When set the code will store the last 4 bytes of MIDI Input Message and show those values when you hold the track selector button (Bt#8 on the left).
+//
+#define VERSION_NUMBER 1
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include "Functions.h"
@@ -61,6 +63,12 @@ void setup()
 void loop() 
 {
   #if !DEBUG_MIDI_INPUT
+    if (showVersion)
+    {
+      ShowTemporaryMessage(kVersionNumberMessage);
+      showVersion = false;
+    }
+    //
     doTickSequencer();
     readButtons();
     //
