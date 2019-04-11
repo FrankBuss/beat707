@@ -57,6 +57,7 @@ void handleMIDIInput()
         if (!configData.midiClockInternal) 
         {
           if (configData.seqSyncOut) Serial.write(0xFA);
+          //
           #if EXTERNAL_CONTINUE
             startSequencer(true);
           #endif
@@ -125,9 +126,11 @@ void handleMIDIInput()
           if (recordEnabled && seqPlaying) addRecordNotes(midiInputBuffer[1], 0, channel);
           //
           #if RECORD_ENABLED_ECHO
+            isSendingMIDIEcho = true;
             Serial.write(midiInputBuffer[0]);
             Serial.write(midiInputBuffer[1]);
             Serial.write(lastData);
+            checkLateSequencerTick(false);
           #endif
           //
           break;
@@ -138,9 +141,11 @@ void handleMIDIInput()
           if (recordEnabled && seqPlaying) addRecordNotes(midiInputBuffer[1], lastData, channel);
           //
           #if RECORD_ENABLED_ECHO
+            isSendingMIDIEcho = true;
             Serial.write(midiInputBuffer[0]);
             Serial.write(midiInputBuffer[1]);
             Serial.write(lastData);
+            checkLateSequencerTick(false);
           #endif           
           //
           #if MIDI_IN_TO_PATTERN

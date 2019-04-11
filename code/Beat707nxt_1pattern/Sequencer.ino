@@ -14,11 +14,15 @@ ISR(TIMER1_COMPA_vect)
 {
   if (configData.midiClockInternal) 
   {
-    if (configData.seqSyncOut) Serial.write(0xF8); // Midi Clock Out //
-    ledsBufferFlip();
-    pulseOut(tickOutPinState);
-    outputMIDIBuffer();
-    calculateSequencer++;
+    #if RECORD_ENABLED_ECHO
+      if (isSendingMIDIEcho) lateSequencerTick = true; else checkLateSequencerTick(true);
+    #else
+      if (configData.seqSyncOut) Serial.write(0xF8); // Midi Clock Out // 
+      ledsBufferFlip(); 
+      pulseOut(tickOutPinState);
+      outputMIDIBuffer();
+      calculateSequencer++;   
+    #endif
   }
   else 
   {
@@ -27,6 +31,23 @@ ISR(TIMER1_COMPA_vect)
     startTimer(true);
   }
 }
+
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#if RECORD_ENABLED_ECHO
+  void checkLateSequencerTick(bool forced)
+  {
+    isSendingMIDIEcho = false;
+    if (lateSequencerTick || forced)
+    {
+      lateSequencerTick = false;
+      if (configData.seqSyncOut) Serial.write(0xF8); // Midi Clock Out // 
+      ledsBufferFlip(); 
+      pulseOut(tickOutPinState);
+      outputMIDIBuffer();
+      calculateSequencer++;
+    }
+  }
+#endif
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void outputMIDIBuffer()

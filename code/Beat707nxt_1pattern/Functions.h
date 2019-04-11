@@ -87,3 +87,7 @@ void checkIfMidiCCok();
 void checkIfEchoOK();
 void pulseOut(bool enable);
 char getBankLetter(byte value);
+//
+#if RECORD_ENABLED_ECHO
+  void checkLateSequencerTick(bool forced);
+#endif

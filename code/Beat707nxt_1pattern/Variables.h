@@ -135,6 +135,11 @@ byte tickOutCounterLen = 0;
 bool tickOutPinState = false;
 bool isSelectingBank = false;
 //
+#if RECORD_ENABLED_ECHO
+  bool lateSequencerTick = false;
+  bool isSendingMIDIEcho = false;
+#endif
+//
 #if TRACK_DEBUG_MIDI
   byte lastMIDIinput[4] = {0, 0, 0, 0};
 #endif

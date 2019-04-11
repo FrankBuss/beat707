@@ -8,7 +8,10 @@
  * 
  *  List of Changes
  *  
- *  - 04/11/2019
+ *  - 04/11/2019 B
+ *    * Fixed the MIDI Input Echo code so it doesn't conflicts with the sequencer interrupt. Before I start sending the note echo I set a variable that tells the sequencer interrupt to perform after I finish up sending the 3 bytes of MIDI information from the note on/off messages.
+ *  
+ *  - 04/11/2019 A
  *    * Improved the midi buffer output, using a faster code so notes are output faster. The code buffers the next tick of the sequencer ahead of time, so when the time comes to output the notes everything is already set in a buffer that is output quickly. The heavy task of "rendering" the next notes are always done after the current buffer is output to the MIDI interface (UART).
  * 
  *  - 04/10/2019
