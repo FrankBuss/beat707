@@ -55,7 +55,7 @@ void updateSequencerSpeed(bool force);
 void setupTimerForExternalMIDISync(bool active);
 void stopSequencer(void);
 void MIDIallNotesOff();
-void sendMidiEvent(byte type, byte byte1, byte byte2, byte channel, byte slot);
+void sendMidiEvent(byte type, byte byte1, byte byte2, byte channel);
 void startMIDIinterface();
 void sendFinalZero();
 bool sendValueCheckZero(byte value);
@@ -81,7 +81,7 @@ void recordInputCheck(byte data1, byte data2, byte channel, byte track);
 #endif
 //
 void sendMIDIProgramChange(byte track);
-void sendMIDICC(byte track, bool sendNow, byte slot);
+void sendMIDICC(byte track, bool sendNow);
 void resetProgramChangeAndCC();
 void checkIfMidiCCok();
 void checkIfEchoOK();

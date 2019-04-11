@@ -38,25 +38,12 @@ void outputMIDIBuffer()
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void sendOutputMIDIBuffer()
 {
-  while (midiOutputBufferDTPosition > 0 || midiOutputBufferNTPosition > 0)
+  while (midiOutputBufferPosition > 0)
   {
-    if (midiOutputBufferDTPosition > 0 && midiOutputBufferDT[0][midiOutputBufferDTPosition - 1] > 0)
-    {
-      Serial.write(midiOutputBufferDT[0][midiOutputBufferDTPosition - 1]);
-      Serial.write(midiOutputBufferDT[1][midiOutputBufferDTPosition - 1]);
-      if (midiOutputBufferDT[2][midiOutputBufferDTPosition - 1] != 0xFF) Serial.write(midiOutputBufferDT[2][midiOutputBufferDTPosition - 1]);
-      midiOutputBufferDT[0][midiOutputBufferDTPosition - 1] = 0;
-      midiOutputBufferDTPosition--;
-    }
-    //
-    if (midiOutputBufferNTPosition > 0 && midiOutputBufferNT[0][midiOutputBufferNTPosition - 1] > 0)
-    {
-      Serial.write(midiOutputBufferNT[0][midiOutputBufferNTPosition - 1]);
-      Serial.write(midiOutputBufferNT[1][midiOutputBufferNTPosition - 1]);
-      if (midiOutputBufferNT[2][midiOutputBufferNTPosition - 1] != 0xFF) Serial.write(midiOutputBufferNT[2][midiOutputBufferNTPosition - 1]);
-      midiOutputBufferNT[0][midiOutputBufferNTPosition - 1] = 0;
-      midiOutputBufferNTPosition--;
-    }
+    Serial.write(midiOutputBuffer[0][midiOutputBufferPosition - 1]);
+    Serial.write(midiOutputBuffer[1][midiOutputBufferPosition - 1]);
+    if (midiOutputBuffer[2][midiOutputBufferPosition - 1] != 0xFF) Serial.write(midiOutputBuffer[2][midiOutputBufferPosition - 1]);
+    midiOutputBufferPosition--;
   }
 }
 
@@ -146,7 +133,7 @@ void doTickSequencer()
               trackNoteOn(x, configData.trackNote[x], getMPVelocity(patternData.trackProcessor[x], theVelocity));
             }
             //
-            if (seqCounter == 0 && patternData.sendCC[x] > 0) sendMIDICC(x, false, 0);
+            if (seqCounter == 0 && patternData.sendCC[x] > 0) sendMIDICC(x, false);
           }
         }
         //
@@ -171,7 +158,7 @@ void doTickSequencer()
             {
               if (isNoteOff)
               {
-                sendMidiEvent(midiNoteOff, xnote, 0, configData.trackMidiCH[DRUM_TRACKS+x], 1);
+                sendMidiEvent(midiNoteOff, xnote, 0, configData.trackMidiCH[DRUM_TRACKS+x]);
                 noteLenCounters[DRUM_TRACKS+x] = 0;
                 if (xnote == prevPlayedNote[DRUM_TRACKS+x]) prevPlayedNote[DRUM_TRACKS+x] = 0;
               }
@@ -200,7 +187,7 @@ void doTickSequencer()
               }
             }
             //
-            if (seqCounter == 0 && patternData.sendCC[x] > 0) sendMIDICC(x, false, 1);
+            if (seqCounter == 0 && patternData.sendCC[x] > 0) sendMIDICC(x, false);
           }
         }
         //
@@ -246,10 +233,10 @@ void doTickSequencer()
           noteLenCounters[x]--;
           if (noteLenCounters[x] == 0) 
           {
-            if (x < DRUM_TRACKS) sendMidiEvent(midiNoteOff, configData.trackNote[x], 0, configData.trackMidiCH[x], 0);
+            if (x < DRUM_TRACKS) sendMidiEvent(midiNoteOff, configData.trackNote[x], 0, configData.trackMidiCH[x]);
             else if (prevPlayedNote[x-DRUM_TRACKS] > 0)
             {
-              sendMidiEvent(midiNoteOff, prevPlayedNote[x-DRUM_TRACKS], 0, configData.trackMidiCH[x], 0);
+              sendMidiEvent(midiNoteOff, prevPlayedNote[x-DRUM_TRACKS], 0, configData.trackMidiCH[x]);
               prevPlayedNote[x-DRUM_TRACKS] = 0;
             }
           }
@@ -430,10 +417,10 @@ byte getMPVelocity(byte xproc, byte xorgvelocity)
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void trackNoteOn(byte xtrack, byte xnote, byte xvelocity)
 {
-  sendMidiEvent(midiNoteOn, xnote, xvelocity, configData.trackMidiCH[xtrack], 0);
+  sendMidiEvent(midiNoteOn, xnote, xvelocity, configData.trackMidiCH[xtrack]);
   if (noteLenCounters[xtrack] > 0) 
   {
-    sendMidiEvent(midiNoteOff, xnote, 0, configData.trackMidiCH[xtrack], 0);
+    sendMidiEvent(midiNoteOff, xnote, 0, configData.trackMidiCH[xtrack]);
     noteLenCounters[xtrack] = 0;
   }
   //
@@ -443,9 +430,9 @@ void trackNoteOn(byte xtrack, byte xnote, byte xvelocity)
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void noteTrackNoteOn(byte xtrack, byte xnote, byte xvelocity, bool slide)
 {
-  if (slide && prevPlayedNote[xtrack-DRUM_TRACKS] > 0 && prevPlayedNote[xtrack-DRUM_TRACKS] != xnote)  sendMidiEvent(midiNoteOff, prevPlayedNote[xtrack-DRUM_TRACKS], 0, configData.trackMidiCH[xtrack], 1);
-  sendMidiEvent(midiNoteOn, xnote, xvelocity, configData.trackMidiCH[xtrack], 1);
-  if ((!slide && prevPlayedNote[xtrack-DRUM_TRACKS] > 0) || prevPlayedNote[xtrack-DRUM_TRACKS] == xnote)  sendMidiEvent(midiNoteOff, prevPlayedNote[xtrack-DRUM_TRACKS], 0, configData.trackMidiCH[xtrack], 1);
+  if (slide && prevPlayedNote[xtrack-DRUM_TRACKS] > 0 && prevPlayedNote[xtrack-DRUM_TRACKS] != xnote)  sendMidiEvent(midiNoteOff, prevPlayedNote[xtrack-DRUM_TRACKS], 0, configData.trackMidiCH[xtrack]);
+  sendMidiEvent(midiNoteOn, xnote, xvelocity, configData.trackMidiCH[xtrack]);
+  if ((!slide && prevPlayedNote[xtrack-DRUM_TRACKS] > 0) || prevPlayedNote[xtrack-DRUM_TRACKS] == xnote)  sendMidiEvent(midiNoteOff, prevPlayedNote[xtrack-DRUM_TRACKS], 0, configData.trackMidiCH[xtrack]);
   //  
   prevPlayedNote[xtrack-DRUM_TRACKS] = xnote;
   noteLenCounters[xtrack] =  configData.drumNoteLen[xtrack] + 1; 
@@ -465,9 +452,8 @@ void resetSequencer()
   midiClockBeatsPrev = midiClockBeats;
   recordBufferPosition = 0;
   //
-  midiOutputBufferDTPosition = midiOutputBufferDTPosition = 0;
-  memset(midiOutputBufferDT, 0, sizeof(midiOutputBufferDT));
-  memset(midiOutputBufferNT, 0, sizeof(midiOutputBufferNT));
+  midiOutputBufferPosition = 0;
+  memset(midiOutputBuffer, 0, sizeof(midiOutputBuffer));
   memset(noteLenCounters, 0, sizeof(noteLenCounters));
   //  
   for (byte xe = 0; xe < ECHOS; xe++)
@@ -496,13 +482,13 @@ void stopDrumTrackPrevNote(byte track, bool isDrumTrack)
 {
   if (isDrumTrack)
   {
-    sendMidiEvent(midiNoteOff, configData.trackNote[track], 0, configData.trackMidiCH[track], 0);
+    sendMidiEvent(midiNoteOff, configData.trackNote[track], 0, configData.trackMidiCH[track]);
   }
   else
   {
     if (prevPlayedNote[track] > 0)
     {
-      sendMidiEvent(midiNoteOff, prevPlayedNote[track], 0, configData.trackMidiCH[DRUM_TRACKS+track], 1);
+      sendMidiEvent(midiNoteOff, prevPlayedNote[track], 0, configData.trackMidiCH[DRUM_TRACKS+track]);
       prevPlayedNote[track] = 0;
     } 
   }
@@ -531,9 +517,8 @@ void startSequencer(bool docontinue)
   if (configData.seqSyncOut && configData.midiClockInternal) Serial.write(0xFA); // MIDI Start
   if (alreadyPlaying)
   {
-    midiOutputBufferDTPosition = midiOutputBufferNTPosition = 0;
-    memset(midiOutputBufferDT, 0, sizeof(midiOutputBufferDT));
-    memset(midiOutputBufferNT, 0, sizeof(midiOutputBufferNT));
+    midiOutputBufferPosition = 0;
+    memset(midiOutputBuffer, 0, sizeof(midiOutputBuffer));
     calculateSequencer = 1;
     doTickSequencer(); 
   }
@@ -629,27 +614,17 @@ void MIDIallNotesOff()
 {
   for (byte x=0; x<midiChannels; x++)
   {
-    sendMidiEvent(0xB0, 0x7B, 0x00, x, 0);
+    sendMidiEvent(0xB0, 0x7B, 0x00, x);
   }
 }
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-void sendMidiEvent(byte type, byte byte1, byte byte2, byte channel, byte slot)
+void sendMidiEvent(byte type, byte byte1, byte byte2, byte channel)
 {
-  if (slot == 0)
-  {
-    midiOutputBufferDT[0][midiOutputBufferDTPosition] = type + channel;
-    midiOutputBufferDT[1][midiOutputBufferDTPosition] = byte1;
-    midiOutputBufferDT[2][midiOutputBufferDTPosition] = byte2;
-    midiOutputBufferDTPosition++;
-  }
-  else
-  {
-    midiOutputBufferNT[0][midiOutputBufferNTPosition] = type + channel;
-    midiOutputBufferNT[1][midiOutputBufferNTPosition] = byte1;
-    midiOutputBufferNT[2][midiOutputBufferNTPosition] = byte2;
-    midiOutputBufferNTPosition++;
-  }
+  midiOutputBuffer[0][midiOutputBufferPosition] = type + channel;
+  midiOutputBuffer[1][midiOutputBufferPosition] = byte1;
+  midiOutputBuffer[2][midiOutputBufferPosition] = byte2;
+  midiOutputBufferPosition++;
 }
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -673,11 +648,11 @@ void startMIDIinterface()
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void sendMIDIProgramChange(byte track)
 {
-  if (patternData.programChange[track] > 0) sendMidiEvent(midiProgramChange, patternData.programChange[track] - 1, 0xFF, configData.trackMidiCH[track], 0);
+  if (patternData.programChange[track] > 0) sendMidiEvent(midiProgramChange, patternData.programChange[track] - 1, 0xFF, configData.trackMidiCH[track]);
 }
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-void sendMIDICC(byte track, bool sendNow, byte slot)
+void sendMIDICC(byte track, bool sendNow)
 {
   if (bitRead(patternData.sendCCValueLFO[curTrack], midiCCLFO) == 1)
   {
@@ -741,12 +716,12 @@ void sendMIDICC(byte track, bool sendNow, byte slot)
     if (byte(newValue) != sendCCCurrentValue[track]) 
     {
       sendCCCurrentValue[track] = byte(newValue);
-      sendMidiEvent(midiCC, patternData.sendCC[track] - 1, sendCCCurrentValue[track] & 0x7F, configData.trackMidiCH[track], slot);
+      sendMidiEvent(midiCC, patternData.sendCC[track] - 1, sendCCCurrentValue[track] & 0x7F, configData.trackMidiCH[track]);
     }
   }
   else
   {
-    if (sendNow) sendMidiEvent(midiCC, patternData.sendCC[track] - 1, patternData.sendCCValueLFO[curTrack], configData.trackMidiCH[track], slot);
+    if (sendNow) sendMidiEvent(midiCC, patternData.sendCC[track] - 1, patternData.sendCCValueLFO[curTrack], configData.trackMidiCH[track]);
  }
 }
 
@@ -761,7 +736,7 @@ void resetProgramChangeAndCC()
     {
       sendCCCurrentValue[x] = 0;
       sendCCCurrentPosition[x] = 0;
-      if (patternData.sendCC[x] > 0) sendMIDICC(x, true, (x < DRUM_TRACKS) ? 0 : 1);
+      if (patternData.sendCC[x] > 0) sendMIDICC(x, true);
     }
   }
 }

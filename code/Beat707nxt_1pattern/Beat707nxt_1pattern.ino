@@ -7,6 +7,9 @@
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  * 
  *  List of Changes
+ *  
+ *  - 04/11/2019
+ *    * Improved the midi buffer output, using a faster code so notes are output faster. The code buffers the next tick of the sequencer ahead of time, so when the time comes to output the notes everything is already set in a buffer that is output quickly. The heavy task of "rendering" the next notes are always done after the current buffer is output to the MIDI interface (UART).
  * 
  *  - 04/10/2019
  *    * Initial Release: removed all flash and spi code. Didn't update the interface, so it will still show the pattern selector but when trying to change a pattern it will do nothing.
