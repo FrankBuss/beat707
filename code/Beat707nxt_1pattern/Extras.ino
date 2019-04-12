@@ -8,6 +8,7 @@
 void reset()
 {
   resetSegments(0, 2);
+  memset(trackPosition, 0, sizeof(trackPosition));
   memset(midiOutputBuffer, 0, sizeof(midiOutputBuffer));
   memset(echoSpace, 0, sizeof(echoSpace));
   memset(echoAttackDecay, 0, sizeof(echoAttackDecay));
@@ -21,7 +22,6 @@ void reset()
   memset(buttonDownTime, 0, sizeof(buttonDownTime));
   memset(prevPlayedNote, 0, sizeof(prevPlayedNote));
   configData.init();
-  bitSet(patternBitsSelector,0);
   midiOutputBufferPosition = 0;
   memset(recordBuffer, 0, sizeof(recordBuffer));
   recordBufferPosition = 0;

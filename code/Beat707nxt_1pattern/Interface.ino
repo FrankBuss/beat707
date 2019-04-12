@@ -34,18 +34,13 @@ void createScreen()
   {
     leds[1] = leds[2] = B01010101; 
   } 
-  else if (curRightScreen == kRightMenu && (menuPosition == menuVariationsABCD || menuPosition == menuPtPlays || menuPosition == menuPtPlaysChain || menuPosition == menuPtNext))
+  else if (curRightScreen == kRightMenu && (menuPosition == menuVariationsABCD))
   {
    leds[1] = leds[2] = B01010101; 
   }
   else if (curRightScreen == kRightMenu && menuPosition != menuMIDIChannel && menuPosition != menuNote && menuPosition != menuNoteLen && menuPosition != menuProc && menuPosition != menuVariationsABCD && !(menuPosition >= menuProgramChange && menuPosition <= menuMIDICCValueRate))
   {
     leds[1] = leds[2] = 0xFF;
-  }
-  else if (curRightScreen == kRightPatternSelection)
-  {
-    leds[1] = patternBitsSelector;
-    leds[2] = patternBitsSelector >> 8;
   }
   else if (menuPosition == menuVariationsABCD)
   {
@@ -163,28 +158,9 @@ void createScreen()
   {
     showMenu();
   }
-  else if (curRightScreen == kRightPatternSelection && forceAccent && isSelectingBank)
-  {
-    segments[1][0] = S_b;
-    segments[1][1] = S_A;
-    segments[1][2] = S_N;
-    segments[1][3] = S_K;
-    //
-    segments[1][5] = S_S;
-    segments[1][6] = S_E;
-    segments[1][7] = S_L;
-    segments[2][0] = S_E;
-    segments[2][1] = S_C;
-    segments[2][2] = S_T; 
-    //
-    segments[2][4] = S_1_;
-    segments[2][5] = S_DASH;
-    segments[2][6] = S_G;
-  }
   else if (curRightScreen == kRightSteps || 
       curRightScreen == kRightTrackSelection ||
-      curRightScreen == kRightABCDVariations ||
-      curRightScreen == kRightPatternSelection)
+      curRightScreen == kRightABCDVariations)
   {
     //
     #if TRACK_DEBUG_MIDI
@@ -703,7 +679,6 @@ void checkInterface()
   //
   if (curRightScreen == kRightTrackSelection ||
       curRightScreen == kRightABCDVariations ||
-      curRightScreen == kRightPatternSelection ||
       curRightScreen == kRightMenuCopyPaste ||
       curRightScreen == kRightMenu)
   {
@@ -740,9 +715,6 @@ void checkInterface()
       else if (curRightScreen == kRightMenuCopyPaste)
       {
         processMenuCopyPaste(leButton);
-      }
-      else if (curRightScreen == kRightPatternSelection)
-      {
       }
     }
   }
@@ -853,7 +825,6 @@ void checkInterface()
   //
   if (buttonEvent[0][6] == kButtonHold)
   {
-    if (curRightScreen == kRightSteps) curRightScreen = kRightPatternSelection;
     isSelectingBank = false;
     buttonEvent[0][6] = 0;
     updateScreen = true;
@@ -865,7 +836,6 @@ void checkInterface()
     //
     if (forceAccent)
     {
-      curRightScreen = kRightPatternSelection;
       isSelectingBank = true;
     }
     else if (curRightScreen == kRightMenu)

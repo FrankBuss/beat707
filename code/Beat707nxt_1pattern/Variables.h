@@ -8,10 +8,10 @@
 #define DEFAULT_NOTE 36       // When adding a new note the default note value for the very first note - Set to 0 so it asks what is the default note everytime you add the first one on a pattern
 #define DEFAULT_MIDI_CH 10    // MIDI Channel for all tracks: 1 ~ 16
 #define DRUM_TRACKS 10        // This can't go above 16
-#define NOTE_TRACKS 6         // This can't go above 8
+#define NOTE_TRACKS 5         // This can't go above 8
 #define PATTERNS 16           // This can't go above 64
 #define PT_BANKS 16           // # of Pattern Banks - should be the MAX that the Winbond chip can take (usually 28)
-#define ECHOS 2               // Depends on RAM left, usually can't go above 9
+#define ECHOS 1               // Depends on RAM left, usually can't go above 9
 #define STEPS 16              // This can't go above 16
 #define TEMPORARY_MESSAGE_TIME 80
 #define EXTERNAL_CLOCK_TIMER (F_CPU / 3960) // Timer speed used to read the External MIDI Clock - MIDI is 31250 bauds = 3906 bytes per second
@@ -23,17 +23,15 @@ enum
 {
   fadeIn = 1, fadeOut, randomVel,
   kButtonNone = 0, kButtonClicked, kButtonHold, kButtonRelease, kButtonReleaseNothingClicked,
-  kRightSteps = 0, kRightABCDVariations, kRightTrackSelection, kRightPatternSelection, kRightMenuCopyPaste, kRightMenu, kMuteMenu,
+  kRightSteps = 0, kRightABCDVariations, kRightTrackSelection, kRightMenuCopyPaste, kRightMenu, kMuteMenu,
   midiNoteOn = 0x90, midiNoteOff = 0x80, midiCC = 0xB0, midiProgramChange = 0xC0, midiChannels = 16,
   echoTypeOnAllNotes = 0, echoTypeForceMaxVelocity, echoTypeForceLowVelocity,
   midiCCLFO = 7,
   procFadeMin = 4, 
   //
   menuFirst = 0, 
-      menuPtNext = 0,
-      menuPtPlays, 
-      menuPtPlaysChain, 
-      menuMIDIChannel, 
+      menuMIDIChannel = 0, 
+      menuTrackLen,
       menuNote, 
       menuNoteLen,
       menuAccent1, 
@@ -57,8 +55,7 @@ enum
       menuPulseOut,
       menuPulseOutLen,
       menuInit, 
-      menuMIDIinPattern, 
-        lastMenu = menuMIDIinPattern,
+        lastMenu = menuInit,
   //
   kLeftMain = 0,
   kMemoryProtectMessage = 0, kPatternRepeatMessage, kVersionNumberMessage,
@@ -79,7 +76,6 @@ byte curTrack = 0;
 bool updateScreen = true;
 byte curLeftScreen = 0;
 byte curRightScreen = 0;
-uint16_t patternBitsSelector;
 bool mirror = true;
 bool somethingClicked = false;
 bool somethingHappened = false;
@@ -111,8 +107,6 @@ byte midiInputBuffer[2] = {0, 0};
 byte midiOutputBuffer[3][(DRUM_TRACKS + NOTE_TRACKS) * 3];
 byte midiOutputBufferPosition = 0;
 byte calculateSequencer = 0;
-uint16_t patternPagePos = 0;
-uint16_t pagePos = 0;
 char editingNoteTranspose = -127;
 bool noteTransposeWasChanged = false;
 bool noteTransposeEditAllSteps = false;
@@ -135,6 +129,7 @@ byte tickOutCounterLen = 0;
 bool tickOutPinState = false;
 bool isSelectingBank = false;
 bool showVersion = true;
+byte trackPosition[DRUM_TRACKS + NOTE_TRACKS];
 //
 #if RECORD_ENABLED_ECHO
   bool lateSequencerTick = false;
@@ -222,12 +217,12 @@ struct WCONFIG
   byte drumNoteLen[DRUM_TRACKS+NOTE_TRACKS];
   byte trackNote[DRUM_TRACKS];
   byte trackMidiCH[DRUM_TRACKS+NOTE_TRACKS]; // 0~15 
+  byte trackLen[DRUM_TRACKS+NOTE_TRACKS];
   byte accentValues[3];
   byte BPM;
   bool seqSyncOut;
   uint32_t muteTrack;
-  byte midiInputToPatternChannel;
-  bool midiClockInternal;
+    bool midiClockInternal;
   bool writeProtectFlash;
   byte tickOut;
   byte tickOutLen;
@@ -247,6 +242,8 @@ struct WCONFIG
     //
     memset(drumNoteLen, 6, sizeof(drumNoteLen));
     memset(trackMidiCH, (DEFAULT_MIDI_CH-1), sizeof(trackMidiCH));
+    memset(trackLen, 16, sizeof(trackLen));
+    //
     for (xm = 0; xm < NOTE_TRACKS; xm++)
     {
       trackMidiCH[DRUM_TRACKS + xm] = xm;
@@ -260,7 +257,6 @@ struct WCONFIG
     accentValues[0] = 80;
     accentValues[1] = 100;
     accentValues[2] = 127;
-    midiInputToPatternChannel = 8;
     writeProtectFlash = false;
     //
     #if EXTERNAL_CLOCK

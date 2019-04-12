@@ -148,16 +148,6 @@ void handleMIDIInput()
             checkLateSequencerTick(false);
           #endif           
           //
-          #if MIDI_IN_TO_PATTERN
-            if (!recordEnabled && channel == configData.midiInputToPatternChannel)
-            {
-              if (midiInputBuffer[1] >= MIDI_IN_START_NOTE && (midiInputBuffer[1] - MIDI_IN_START_NOTE) <= PATTERNS)
-              {
-                
-              }
-            }
-          #endif
-          //
           break; 
         }      
       }

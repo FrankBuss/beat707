@@ -8,6 +8,10 @@
  * 
  *  List of Changes
  *  
+ *  V0002 - 04/12/2019
+ *    * Removed some stuff from the interface that is pattern/bank related.
+ *    * Added Track Len to the global menu. Goes from 1 to 16. It will follow the Variations ABCD but crop the track length using the LEN value instead. Default is 16, the whole track (all steps).
+ *    
  *  V0001 - 04/11/2019
  *    * Fixed the MIDI Input Echo code so it doesn't conflicts with the sequencer interrupt. Before I start sending the note echo I set a variable that tells the sequencer interrupt to perform after I finish up sending the 3 bytes of MIDI information from the note on/off messages.
  *  
@@ -25,7 +29,6 @@
 #define DEBUG_SERIAL 0        // Sets the serial output to 9600 bauds and sends some debuging information out.
 #define DEBUG_MIDI_INPUT 0    // When set the whole unit will operate only to display midi input messages. You will need to set DRUM_TRACKS and NOTE_TRACKS to 1, as this Debug mode uses a lot of memory to store data. Pressing STOP clears the buffer, and pressing +/- shows next/previous event recorded. Pressing the last button on the right toggles between HEX or normal values for the messages.
 #define MIDI_OVER_USB 0       // When set will use 38400 bauds for the Serial interface
-#define MIDI_IN_TO_PATTERN 1  // When set it will use any MIDI NOTE Input on the selected MIDI Channel (default 1) to select the next playing pattern. Starting from MIDI_IN_START_NOTE
 #define MIDI_IN_START_NOTE 24 // MIDI Input to Pattern Selection Starting Note
 #define RECORD_ENABLED_ECHO 1 // Enables the midi thru echo on all input notes
 #define RECORD_FORCE_VEL 1    // When set velocity will always be the maximum for note track recording
@@ -33,7 +36,7 @@
 #define EXTERNAL_CONTINUE 0   // When set will use it to continue the sequener clock
 #define TRACK_DEBUG_MIDI 0    // When set the code will store the last 4 bytes of MIDI Input Message and show those values when you hold the track selector button (Bt#8 on the left).
 //
-#define VERSION_NUMBER 1
+#define VERSION_NUMBER 2
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include "Functions.h"

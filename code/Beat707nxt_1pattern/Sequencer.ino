@@ -126,9 +126,9 @@ void doTickSequencer()
         {
           if (bitRead(configData.muteTrack, x) != 1)
           {
-            byte xvel = bitRead(stepsData[seqPosition].steps[x], 1 + (variation * 2)) << 1;
-            xvel |= bitRead(stepsData[seqPosition].steps[x], 0 + (variation * 2));
-            bool isDouble = bitRead(stepsData[seqPosition].stepsDouble[variation], x);
+            byte xvel = bitRead(stepsData[trackPosition[x]].steps[x], 1 + (variation * 2)) << 1;
+            xvel |= bitRead(stepsData[trackPosition[x]].steps[x], 0 + (variation * 2));
+            bool isDouble = bitRead(stepsData[trackPosition[x]].stepsDouble[variation], x);
             //
             if ((xvel > 0 && seqCounter == 0) || (seqCounter == PPQ_TICK_DOUBLE_NOTE && isDouble))
             {
@@ -164,16 +164,16 @@ void doTickSequencer()
         {
           if (bitRead(configData.muteTrack, x + DRUM_TRACKS) != 1)
           {
-            byte xvel = bitRead(stepsData[seqPosition].noteStepsExtras[x][0], 1 + (variation * 2)) << 1;
-            xvel |= bitRead(stepsData[seqPosition].noteStepsExtras[x][0], 0 + (variation * 2));
+            byte xvel = bitRead(stepsData[trackPosition[x + DRUM_TRACKS]].noteStepsExtras[x][0], 1 + (variation * 2)) << 1;
+            xvel |= bitRead(stepsData[trackPosition[x + DRUM_TRACKS]].noteStepsExtras[x][0], 0 + (variation * 2));
             //
-            byte extra = bitRead(stepsData[seqPosition].noteStepsExtras[x][1], 1 + (variation * 2)) << 1;
-            extra |= bitRead(stepsData[seqPosition].noteStepsExtras[x][1], 0 + (variation * 2));
+            byte extra = bitRead(stepsData[trackPosition[x + DRUM_TRACKS]].noteStepsExtras[x][1], 1 + (variation * 2)) << 1;
+            extra |= bitRead(stepsData[trackPosition[x + DRUM_TRACKS]].noteStepsExtras[x][1], 0 + (variation * 2));
             //
             bool isSlide = (extra == 1);
             bool isDouble = (extra == 2);
             bool isNoteOff = (extra == 3);
-            byte xnote = stepsData[seqPosition].noteSteps[x][variation];
+            byte xnote = stepsData[trackPosition[x + DRUM_TRACKS]].noteSteps[x][variation];
             //
             if ((xnote > 0 && xvel > 0 && seqCounter == 0) || (xnote > 0 && seqCounter == PPQ_TICK_DOUBLE_NOTE && isDouble))
             {
@@ -284,7 +284,15 @@ void doTickSequencer()
         case 12: showBPMdotBuffer = true; break;
       }
       //
-      if (seqPosition >= STEPS)
+      byte maxSTEPS = 0;
+      for (byte x = 0; x < (DRUM_TRACKS+NOTE_TRACKS); x++)
+      {
+        trackPosition[x]++;
+        if (trackPosition[x] >= configData.trackLen[x]) trackPosition[x] = 0;
+        if (configData.trackLen[x] > maxSTEPS) maxSTEPS = configData.trackLen[x];
+      }
+      //
+      if (seqPosition >= maxSTEPS)
       {
         seqPosition = 0; 
         showBPMdotBuffer = true;
@@ -316,14 +324,13 @@ void doTickSequencer()
 void recordInputCheck(byte data1, byte data2, byte channel, byte track)
 {
   byte xvariation = variation;
-  byte theStep = seqPosition;
+  byte theStep = trackPosition[track];
   //
   if (theStep > 0)  theStep--;
   else 
   {
     theStep = STEPS - 1;
-    if (xvariation > 0) xvariation--;
-    else xvariation = 3;
+    if (xvariation > 0) xvariation--; else xvariation = 3;
   }
   //    
   byte xVar = xvariation;
@@ -488,11 +495,13 @@ void resetSequencer()
   for (byte x=0; x<DRUM_TRACKS; x++)
   {
     stopDrumTrackPrevNote(x, true);
+    trackPosition[x] = 0;
   }
   //
   for (byte x=0; x<NOTE_TRACKS; x++)
   {
     stopDrumTrackPrevNote(x, false);
+    trackPosition[DRUM_TRACKS + x] = 0;
   }
   //
   if (configData.writeProtectFlash) ShowTemporaryMessage(kMemoryProtectMessage);
