@@ -1,6 +1,6 @@
 /*
 
-   Created by William Kalfelz @ Beat707 (c) 2018 - http://www.Beat707.com
+   Created by William Kalfelz @ Beat707 (c) 2019 - http://www.Beat707.com
 
 */
 
@@ -52,7 +52,12 @@ void showMenu()
       segments[1][6] = S_N;
       segments[1][7] = S_G;
       //
-      if (patternData.programChange[curTrack] > 0) printNumber(2, 5, patternData.programChange[curTrack] - 1); else showOnOrOff(false);
+      if (patternData.programChange[curTrack] > 0) 
+      {
+        char xOffset = 1 - configData.programChangeOffset[curTrack];
+        printNumber(2, 5, patternData.programChange[curTrack] - xOffset);
+      }
+      else showOnOrOff(false);
       break;
       //
     case menuMIDICC:
@@ -128,6 +133,18 @@ void showMenu()
       segments[1][6] = S_N;
       //
       printNumber(2, 5, configData.trackLen[curTrack]);
+      break;
+      //
+    case menuPCOffset:
+      segments[1][0] = S_P;
+      segments[1][1] = S_C;
+      //
+      segments[1][4] = S_S;
+      segments[1][5] = S_T;
+      segments[1][6] = S_R;
+      segments[1][7] = S_T;
+      //
+      printNumber(2, 5, configData.programChangeOffset[curTrack]);
       break;
       //
     case menuNote:
@@ -525,6 +542,10 @@ void processMenu(char value)
     case menuTrackLen:
       if (value > 0 && configData.trackLen[curTrack] < 16) configData.trackLen[curTrack]++;
       else if (value < 0 && configData.trackLen[curTrack] > 1) configData.trackLen[curTrack]--;
+      break;
+    //
+    case menuPCOffset:
+      if (configData.programChangeOffset[curTrack] == 0) configData.programChangeOffset[curTrack] = 1; else configData.programChangeOffset[curTrack] = 0;
       break;
     //
     case menuNote:

@@ -1,6 +1,6 @@
 /*
  * 
- * Created by William Kalfelz @ Beat707 (c) 2018 - http://www.Beat707.com
+ * Created by William Kalfelz @ Beat707 (c) 2019 - http://www.Beat707.com
  * 
  */
 
@@ -54,4 +54,10 @@ void waitMs(int mstime)
       __asm__("nop"); 
     }
   }
+}
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+void PatternChanged() 
+{ 
+  patternHasChanges = true; 
 }

@@ -1,6 +1,6 @@
 /*
  * 
- * Created by William Kalfelz @ Beat707 (c) 2018 - http://www.Beat707.com
+ * Created by William Kalfelz @ Beat707 (c) 2019 - http://www.Beat707.com
  * 
  */
 
@@ -338,6 +338,7 @@ void checkInterface()
               }
               //
               noteTransposeWasChanged = true;
+              PatternChanged();
             }
           }
         }
@@ -393,6 +394,7 @@ void checkInterface()
               }
               //
               noteTransposeWasChanged = true;
+              PatternChanged();
             }
           }
         }
@@ -480,6 +482,7 @@ void checkInterface()
             //
             buttonEvent[i + 1][x] = 0;
             updateScreen = true;
+            PatternChanged();
           }
         }
       }
@@ -667,6 +670,7 @@ void checkInterface()
             }
             buttonEvent[i + 1][x] = 0;
             updateScreen = true;
+            PatternChanged();
           }
         }
       }      

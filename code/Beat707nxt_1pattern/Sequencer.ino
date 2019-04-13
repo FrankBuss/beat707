@@ -1,6 +1,6 @@
 /*
  * 
- * Created by William Kalfelz @ Beat707 (c) 2018 - http://www.Beat707.com
+ * Created by William Kalfelz @ Beat707 (c) 2019 - http://www.Beat707.com
  * 
  */
 
@@ -637,6 +637,9 @@ void stopSequencer(void)
   startTimer(false);
   updateScreen = true;  
   calculateSequencer = 1;
+  //
+  EEPROM_Config_Write();
+  EEPROM_Pattern_Write();
 }
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

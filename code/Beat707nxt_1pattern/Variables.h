@@ -1,6 +1,6 @@
 /*
  * 
- * Created by William Kalfelz @ Beat707 (c) 2018 - http://www.Beat707.com
+ * Created by William Kalfelz @ Beat707 (c) 2019 - http://www.Beat707.com
  * 
  */
 
@@ -32,6 +32,7 @@ enum
   menuFirst = 0, 
       menuMIDIChannel = 0, 
       menuTrackLen,
+      menuPCOffset,
       menuNote, 
       menuNoteLen,
       menuAccent1, 
@@ -130,6 +131,8 @@ bool tickOutPinState = false;
 bool isSelectingBank = false;
 bool showVersion = true;
 byte trackPosition[DRUM_TRACKS + NOTE_TRACKS];
+byte* pointerData;
+bool patternHasChanges = false;
 //
 #if RECORD_ENABLED_ECHO
   bool lateSequencerTick = false;
@@ -218,11 +221,12 @@ struct WCONFIG
   byte trackNote[DRUM_TRACKS];
   byte trackMidiCH[DRUM_TRACKS+NOTE_TRACKS]; // 0~15 
   byte trackLen[DRUM_TRACKS+NOTE_TRACKS];
+  byte programChangeOffset[DRUM_TRACKS+NOTE_TRACKS];
   byte accentValues[3];
   byte BPM;
   bool seqSyncOut;
   uint32_t muteTrack;
-    bool midiClockInternal;
+  bool midiClockInternal;
   bool writeProtectFlash;
   byte tickOut;
   byte tickOutLen;
@@ -243,6 +247,7 @@ struct WCONFIG
     memset(drumNoteLen, 6, sizeof(drumNoteLen));
     memset(trackMidiCH, (DEFAULT_MIDI_CH-1), sizeof(trackMidiCH));
     memset(trackLen, 16, sizeof(trackLen));
+    memset(programChangeOffset, 0, sizeof(programChangeOffset));
     //
     for (xm = 0; xm < NOTE_TRACKS; xm++)
     {

@@ -1,13 +1,17 @@
 /*
  * 
  * Beat707NXT_1PATTERN (No Flash/External Storage)
- * Created by William Kalfelz @ Beat707 (c) 2018 - http://www.Beat707.com / http://www.Wusik.com / http://www.Kalfelz.com
+ * Created by William Kalfelz @ Beat707 (c) 2019 - http://www.Beat707.com / http://www.Wusik.com / http://www.Kalfelz.com
  * Creative Development by Gert Borovčak
  * 
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  * 
  *  List of Changes
  *  
+ *  V0004 - 04/13/2019
+ *    * Added Program Change (PC) Offset to the Global Menu, with two values: starting at 0 or starting at 1. This is set per track.
+ *    * Added Save to Internal EEPROM (uses the ATmega328 EEPROM) for all data. It compress the pattern steps to fit things out. Here I used a very simple and fast compression code. It checks for zeros in the data, it counts zeros until it finds a non-zero value. It writes a byte message that is the number of zeros up to 127 zeros. The last bit tells if this is zeros or non-zeros. This way I can save space when storing to EEPROM. The reading happens when you power up the device, and writting is done when you stop the sequencer. If the data haven't changed, nothing is saved. It also shows MEM*** where *** is the memory left in the EEPROM. This can be disabled in the EEPROM file: change #define EEPROM_SHOW_MEM_LEFT to 0
+ *    
  *  V0002 - 04/12/2019
  *    * Removed some stuff from the interface that is pattern/bank related.
  *    * Added Track Len to the global menu. Goes from 1 to 16. It will follow the Variations ABCD but crop the track length using the LEN value instead. Default is 16, the whole track (all steps).
@@ -35,8 +39,9 @@
 #define EXTERNAL_CLOCK 0      // When set external clock is set by default
 #define EXTERNAL_CONTINUE 0   // When set will use it to continue the sequener clock
 #define TRACK_DEBUG_MIDI 0    // When set the code will store the last 4 bytes of MIDI Input Message and show those values when you hold the track selector button (Bt#8 on the left).
+#define EEPROM_STORAGE 1      // When set it will use the internal EEPROM of the ATmega328 to store some data
 //
-#define VERSION_NUMBER 2
+#define VERSION_NUMBER 4
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include "Functions.h"
@@ -51,6 +56,8 @@ void setup()
   startMIDIinterface();
   initTM1638();
   reset();
+  EEPROM_Config_Read();
+  EEPROM_Pattern_Read();
   //
   #if SHOW_FREE_RAM
     freeMemory();
@@ -86,8 +93,10 @@ void loop()
       createScreen(); 
       //
       sendScreen();
-    } 
+    }
+    //
   #else
+    //
     debugCheckMIDIInput();
     readButtons();
     debugCheckInterface();
