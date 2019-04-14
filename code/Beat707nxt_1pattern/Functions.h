@@ -1,8 +1,21 @@
 /*
  * 
- * Created by William Kalfelz @ Beat707 (c) 2018 - http://www.Beat707.com
+ * Created by William Kalfelz @ Beat707 (c) 2019 - http://www.Beat707.com
  * 
  */
+
+#if EEPROM_STORAGE
+  #include <EEPROM.h>
+  void EEPROM_Config_Read();
+  void EEPROM_Config_Write();
+  void EEPROM_Pattern_Read();
+  void EEPROM_Pattern_Write();
+#else
+  inline void EEPROM_Config_Read() {};
+  inline void EEPROM_Config_Write() {};
+  inline void EEPROM_Pattern_Read() {};
+  inline void EEPROM_Pattern_Write() {};
+#endif
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void reset();
@@ -55,7 +68,7 @@ void updateSequencerSpeed(bool force);
 void setupTimerForExternalMIDISync(bool active);
 void stopSequencer(void);
 void MIDIallNotesOff();
-void sendMidiEvent(byte type, byte byte1, byte byte2, byte channel, byte slot);
+void sendMidiEvent(byte type, byte byte1, byte byte2, byte channel);
 void startMIDIinterface();
 void sendFinalZero();
 bool sendValueCheckZero(byte value);
@@ -66,6 +79,7 @@ void ShowTemporaryMessage(byte message);
 byte getMPVelocity(byte xproc, byte xorgvelocity);
 char stepBeenHold();
 void getTimer1SeqOCR(float divider);
+void PatternChanged();
 //
 void addRecordNotes(byte data1, byte data2, byte channel);
 void recordInputCheck(byte data1, byte data2, byte channel, byte track);
@@ -81,9 +95,13 @@ void recordInputCheck(byte data1, byte data2, byte channel, byte track);
 #endif
 //
 void sendMIDIProgramChange(byte track);
-void sendMIDICC(byte track, bool sendNow, byte slot);
+void sendMIDICC(byte track, bool sendNow);
 void resetProgramChangeAndCC();
 void checkIfMidiCCok();
 void checkIfEchoOK();
 void pulseOut(bool enable);
 char getBankLetter(byte value);
+//
+#if RECORD_ENABLED_ECHO
+  void checkLateSequencerTick(bool forced);
+#endif

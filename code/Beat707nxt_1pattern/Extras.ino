@@ -1,6 +1,6 @@
 /*
  * 
- * Created by William Kalfelz @ Beat707 (c) 2018 - http://www.Beat707.com
+ * Created by William Kalfelz @ Beat707 (c) 2019 - http://www.Beat707.com
  * 
  */
 
@@ -8,8 +8,8 @@
 void reset()
 {
   resetSegments(0, 2);
-  memset(midiOutputBufferDT, 0, sizeof(midiOutputBufferDT));
-  memset(midiOutputBufferNT, 0, sizeof(midiOutputBufferNT));
+  memset(trackPosition, 0, sizeof(trackPosition));
+  memset(midiOutputBuffer, 0, sizeof(midiOutputBuffer));
   memset(echoSpace, 0, sizeof(echoSpace));
   memset(echoAttackDecay, 0, sizeof(echoAttackDecay));
   memset(echoTrack, 0, sizeof(echoTrack));
@@ -22,8 +22,7 @@ void reset()
   memset(buttonDownTime, 0, sizeof(buttonDownTime));
   memset(prevPlayedNote, 0, sizeof(prevPlayedNote));
   configData.init();
-  bitSet(patternBitsSelector,0);
-  midiOutputBufferDTPosition = midiOutputBufferNTPosition = 0;
+  midiOutputBufferPosition = 0;
   memset(recordBuffer, 0, sizeof(recordBuffer));
   recordBufferPosition = 0;
   memset(sendCCCurrentValue, 0, sizeof(sendCCCurrentValue));
@@ -55,4 +54,10 @@ void waitMs(int mstime)
       __asm__("nop"); 
     }
   }
+}
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+void PatternChanged() 
+{ 
+  patternHasChanges = true; 
 }

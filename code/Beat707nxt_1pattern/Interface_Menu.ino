@@ -1,6 +1,6 @@
 /*
 
-   Created by William Kalfelz @ Beat707 (c) 2018 - http://www.Beat707.com
+   Created by William Kalfelz @ Beat707 (c) 2019 - http://www.Beat707.com
 
 */
 
@@ -52,7 +52,12 @@ void showMenu()
       segments[1][6] = S_N;
       segments[1][7] = S_G;
       //
-      if (patternData.programChange[curTrack] > 0) printNumber(2, 5, patternData.programChange[curTrack] - 1); else showOnOrOff(false);
+      if (patternData.programChange[curTrack] > 0) 
+      {
+        char xOffset = 1 - configData.programChangeOffset[curTrack];
+        printNumber(2, 5, patternData.programChange[curTrack] - xOffset);
+      }
+      else showOnOrOff(false);
       break;
       //
     case menuMIDICC:
@@ -117,49 +122,31 @@ void showMenu()
       printNumber(2, 5, configData.trackMidiCH[curTrack] + 1);
       break;
       //
-    case menuPtPlays:
-      segments[1][0] = S_P;
-      segments[1][1] = S_A;
-      segments[1][2] = S_T;
-      segments[1][3] = S_T;
-      //
-      segments[1][4] = S_P;
-      segments[1][5] = S_L;
-      segments[1][6] = S_A;
-      segments[1][7] = S_Y;
-      //
-      printNumber(2, 5, 1);
-      break;
-    //
-    case menuPtPlaysChain:
-      segments[1][0] = S_C;
-      segments[1][1] = S_H;
+    case menuTrackLen:
+      segments[1][0] = S_T;
+      segments[1][1] = S_R;
       segments[1][2] = S_A;
-      segments[1][3] = S_I;
-      segments[1][4] = S_N;
+      segments[1][3] = S_K;
       //
-      segments[1][5] = S_P;
-      segments[1][6] = S_L;
-      segments[1][7] = S_Y;
-      //
-      segments[2][5] = S_I;
-      segments[2][6] = S_N;
-      segments[2][7] = S_F;        
-      break;
-    //
-    case menuPtNext:
-      segments[1][0] = S_P;
-      segments[1][1] = S_A;
-      segments[1][2] = S_T;
-      segments[1][3] = S_T;
-      //
-      segments[1][4] = S_N;
+      segments[1][4] = S_L;
       segments[1][5] = S_E;
-      segments[1][6] = S_X;
+      segments[1][6] = S_N;
+      //
+      printNumber(2, 5, configData.trackLen[curTrack]);
+      break;
+      //
+    case menuPCOffset:
+      segments[1][0] = S_P;
+      segments[1][1] = S_C;
+      //
+      segments[1][4] = S_S;
+      segments[1][5] = S_T;
+      segments[1][6] = S_R;
       segments[1][7] = S_T;
       //
+      printNumber(2, 5, configData.programChangeOffset[curTrack]);
       break;
-    //
+      //
     case menuNote:
       segments[1][0] = S_N;
       segments[1][1] = S_O;
@@ -441,22 +428,6 @@ void showMenu()
       showOnOrOff(configData.seqSyncOut);
       break;
     //
-    case menuMIDIinPattern:
-      segments[1][0] = S_N;
-      segments[1][1] = S_N;
-      segments[1][2] = S_I;
-      segments[1][3] = S_d;
-      segments[1][4] = S_I;
-      //
-      segments[1][6] = S_P;
-      segments[1][7] = S_T;
-      //
-      segments[2][0] = S_C;
-      segments[2][1] = S_H;
-      //
-      printNumber(2, 5, configData.midiInputToPatternChannel + 1);
-      break;
-    //
     case menuClockType:
       segments[1][0] = S_C;
       segments[1][1] = S_L;
@@ -568,6 +539,15 @@ void processMenu(char value)
       else if (value < 0 && configData.trackMidiCH[curTrack] > 0) configData.trackMidiCH[curTrack]--;
       break;
     //
+    case menuTrackLen:
+      if (value > 0 && configData.trackLen[curTrack] < 16) configData.trackLen[curTrack]++;
+      else if (value < 0 && configData.trackLen[curTrack] > 1) configData.trackLen[curTrack]--;
+      break;
+    //
+    case menuPCOffset:
+      if (configData.programChangeOffset[curTrack] == 0) configData.programChangeOffset[curTrack] = 1; else configData.programChangeOffset[curTrack] = 0;
+      break;
+    //
     case menuNote:
       if (curTrack < DRUM_TRACKS)
       {
@@ -584,7 +564,7 @@ void processMenu(char value)
         pulseOut(false);
         tickOutPinState = false;
         tickOutCounterLen = 0;
-        tickOutCounter = seqPosition;
+        tickOutCounter = trackPosition[curTrack];
       }
       else
       {
@@ -622,20 +602,6 @@ void processMenu(char value)
     case menuEcho:
       if (value > 0 && echoEdit < (ECHOS - 1)) echoEdit++;
       else if (value < 1 && echoEdit > 0) echoEdit--;
-      break;
-    //
-    case menuPtNext:
-      break;
-    //
-    case menuPtPlays:
-      break;
-    //
-    case menuPtPlaysChain:
-      break;
-    //
-    case menuMIDIinPattern:
-      if (value > 0 && configData.midiInputToPatternChannel < 15) configData.midiInputToPatternChannel++;
-      else if (value < 1 && configData.midiInputToPatternChannel > 0) configData.midiInputToPatternChannel--;
       break;
     //
     case menuClockType:
