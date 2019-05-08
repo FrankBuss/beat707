@@ -1730,4 +1730,16 @@ Wire Wire Line
 Connection ~ 8050 2750
 Wire Wire Line
 	8050 2750 8100 2750
+$Comp
+L power:GND #PWR?
+U 1 1 5CD3C13D
+P 5100 1800
+F 0 "#PWR?" H 5100 1550 50  0001 C CNN
+F 1 "GND" H 5300 1750 50  0000 C CNN
+F 2 "" H 5100 1800 50  0001 C CNN
+F 3 "" H 5100 1800 50  0001 C CNN
+	1    5100 1800
+	1    0    0    -1  
+$EndComp
+Connection ~ 5100 1800
 $EndSCHEMATC
