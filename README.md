@@ -1,22 +1,16 @@
 # Development environment
 
-First install the Arduino IDE. It was tested with Arduino 1.8.9. Then add the URL
-https://mcudude.github.io/MiniCore/package_MCUdude_MiniCore_index.json to
-"File->Preferences->Settings->Additional Board Manager URLs". Then you can install the
-new board with "Tools->Board->Boards Manager". Install "MiniCore by MCUdude", tested with version 2.0.2.
+## Programmer and debug connection
 
-For programming you need an USBasp. You need to reduce the clock speed in the file
-`/home/username/bin/arduino-1.8.9/hardware/arduino/avr/programmers.txt`, where `username` is your
-username (on Linux, on Windows and Mac it might be different, see [here](https://www.arduino.cc/en/hacking/preferences)).
-Search for the `usbasp.program.extra_params` line and add a parameter:
+For programming you can use an USBasp. The red wire of the USBasp programmer needs to be connected to the `pin 1` location:
 
-```
-usbasp.program.extra_params=-Pusb -B 10
-```
+![Programmer](doc/programmer.jpg?raw=true)
 
-For flashing the firmware, configure the following settings (Board, Clock, Variant and Bootloader needs to be changed):
+For debugging, there is the jumper J5 near the MIDI connector, to connect a 5V UART receiver. Connect the top pin to GND (black wire in the image) and the bottom pin to the UART RX input (grey wire) :
 
-![Arduino settings](doc/tools-settings.png?raw=true)
+![debug pin](doc/debug-pin.jpg?raw=true)
+
+## Fuse programming
 
 The Arduino IDE doesn't flash the ATmega fuses, so initially you need to do this from the command line with avrdude like this:
 
@@ -53,9 +47,25 @@ avrdude: safemode: Fuses OK (E:FF, H:D9, L:FF)
 avrdude done.  Thank you.
 ```
 
-For debugging, there is a jumper, which when closed connects the serial output of the ATmega to MIDI out.
-You can instead open it and connect a 5V UART receiver to it with a jumper wire:
+## Arduino IDE setup
 
-![debug pin](doc/debug-pin.jpg?raw=true)
+First install the Arduino IDE. It was tested with Arduino 1.8.13. Then add the URL https://mcudude.github.io/MiniCore/package_MCUdude_MiniCore_index.json to "File->Preferences->Settings->Additional Board Manager URLs". Then you can install the new board with "Tools->Board->Boards Manager". Install "MiniCore by MCUdude", tested with version 2.1.0.
 
-Connect GND of the UART receiver as well. There is another pin soldered to the middle pin of the rotary encoder.
+For programming you need an USBasp. You need to reduce the clock speed in the file `/home/username/bin/arduino-1.8.9/hardware/arduino/avr/programmers.txt`, where `username` is your username (on Linux, on Windows and Mac it might be different, see [here](https://www.arduino.cc/en/hacking/preferences)). Search for the `usbasp.program.extra_params` line and add the parameter `-B 10`. The full line now looks like this:
+
+```
+usbasp.program.extra_params=-Pusb -B 10
+```
+
+Restart the Arduino IDE after changing it.
+
+After restart, select the new board: Tools->Board->MiniCore->ATmega328. For flashing the firmware, configure the following settings (Board, Clock, Variant and Bootloader needs to be changed):
+
+![Arduino settings](doc/tools-settings.png?raw=true)
+
+Then select your programmer, for example USBasp:
+
+![Prorgammer settings](doc/programmer-setting.png?raw=true)
+
+After this you can program the ATmega328 on the board from the Arduino IDE by clicking on the right arrow.
+

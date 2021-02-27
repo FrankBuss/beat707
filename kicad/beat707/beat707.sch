@@ -1,6 +1,5 @@
 EESchema Schematic File Version 4
-LIBS:beat707-cache
-EELAYER 29 0
+EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -48,7 +47,7 @@ F5 "GND" I R 4850 3050 50
 F6 "VCC" I R 4850 3150 50 
 $EndSheet
 $Comp
-L MCU_Microchip_ATmega:ATmega328-PU U3
+L beat707-rescue:ATmega328-PU-MCU_Microchip_ATmega U3
 U 1 1 5C655D4D
 P 6050 3050
 F 0 "U3" H 6300 1450 50  0000 R CNN
@@ -59,7 +58,7 @@ F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/ATmega328_P%20AVR%20MCU%20w
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:USB_B J8
+L beat707-rescue:USB_B-Connector J8
 U 1 1 5C655E8B
 P 5800 6800
 F 0 "J8" H 5855 7267 50  0000 C CNN
