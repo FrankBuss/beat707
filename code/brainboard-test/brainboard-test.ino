@@ -7,29 +7,32 @@
 #define SW4_PIN A1
 
 // rotary encoder
-#define ENCODER_A_PIN 3
-#define ENCODER_B_PIN 2
+#define ENCODER_A_PIN PIN_PD2
+#define ENCODER_B_PIN PIN_PD3
 
 // FRAM
 #define CS_PIN 10
 
 // TRS connector
-#define CLICK_OUT_PIN 4
-#define FOOTSWITCH_PIN A5
+#define CLICK_OUT_PIN PIN_PD4
+#define FOOTSWITCH_PIN PIN_PC5
 
 // TM1638 header
-#define TM1638_STB_PIN 8
-#define TM1638_CLK_PIN 9
-#define TM1638_DIO_1_PIN 5
-#define TM1638_DIO_2_PIN 6
-#define TM1638_DIO_3_PIN 7
+#define TM1638_STB_PIN PIN_PB0
+#define TM1638_CLK_PIN PIN_PB1
+#define TM1638_DIO_1_PIN PIN_PD5
+#define TM1638_DIO_2_PIN PIN_PD6
+#define TM1638_DIO_3_PIN PIN_PD7
 
-// test pin at J7, pin 23
-#define TEST_PIN A0
+// test pin at J9
+#define TEST_PIN PIN_PC0
 
 
 // 7 segment numbers
-const byte numbers[10] = { B00111111, B00000110, B01011011, B01001111, B01100110, B01101101, B01111101, B00000111, B01111111, B01100111};
+const uint8_t numbers[10] = { B00111111, B00000110, B01011011, B01001111, B01100110, B01101101, B01111101, B00000111, B01111111, B01100111};
+
+// current 7 segment output
+uint8_t digits[24];
 
 // mapping of keyboard inputs
 const uint8_t keyMap[32] = {
@@ -241,21 +244,28 @@ void setup() {
 
   // test pin
   pinMode(TEST_PIN, OUTPUT);
+
+  // 7 segment digits
+  for (int i = 0; i < 24; i++) {
+    digits[i] = i % 10;
+  }
 }
 
-uint8_t tm1638Send(uint8_t b) {
+void tm1638Send(uint8_t a, uint8_t b, uint8_t c) {
   for (int i = 0; i < 8; i++) {
-    digitalWrite(TM1638_DIO_1_PIN, (b & 1) ? HIGH : LOW);
+    digitalWrite(TM1638_DIO_1_PIN, (a & 1) ? HIGH : LOW);
+    digitalWrite(TM1638_DIO_2_PIN, (b & 1) ? HIGH : LOW);
+    digitalWrite(TM1638_DIO_3_PIN, (c & 1) ? HIGH : LOW);
     digitalWrite(TM1638_CLK_PIN, LOW);
     digitalWrite(TM1638_CLK_PIN, HIGH);
+    a >>= 1;
     b >>= 1;
-    if (digitalRead(TM1638_DIO_1_PIN) == HIGH) b |= 128;
+    c >>= 1;
   }
-  return b;
 }
 
-uint8_t tm1638Read() {
-  uint8_t temp = 0;
+uint32_t tm1638Read() {
+  uint32_t temp = 0;
 
   for (int i = 0; i < 8; i++) {
     temp >>= 1;
@@ -264,6 +274,12 @@ uint8_t tm1638Read() {
 
     if (digitalRead(TM1638_DIO_1_PIN)) {
       temp |= 0x80;
+    }
+    if (digitalRead(TM1638_DIO_2_PIN)) {
+      temp |= 0x8000;
+    }
+    if (digitalRead(TM1638_DIO_3_PIN)) {
+      temp |= 0x800000;
     }
 
     digitalWrite(TM1638_CLK_PIN, HIGH);
@@ -313,31 +329,42 @@ void loop() {
 
   // TM1638 test
 
-  // max brightness
+  static int brightness = 1;
+  static int brightnessCounter = 0;
+  static int bs[] = { 1,2,3,4,5,6,7,6,5,4,3,2 };
+  if (brightness < 12) {
+    brightnessCounter++;
+    if (brightnessCounter == 10) {
+      brightnessCounter = 0;
+      brightness++;
+    }
+  } else {
+    brightness = 0;
+  }
   digitalWrite(TM1638_STB_PIN, LOW);
-  tm1638Send(0x88+7);
+  tm1638Send(0x88 + bs[brightness], 0x88 + bs[brightness], 0x88 + bs[brightness]);
   digitalWrite(TM1638_STB_PIN, HIGH);
 
   // auto increment mode
   digitalWrite(TM1638_STB_PIN, LOW);
-  tm1638Send(0x40);
+  tm1638Send(0x40, 0x40, 0x40);
   digitalWrite(TM1638_STB_PIN, HIGH);
 
   // start at address 0xc0
   digitalWrite(TM1638_STB_PIN, LOW);
-  tm1638Send(0xc0);
+  tm1638Send(0xc0, 0xc0, 0x0c0);
 
   // send data
   static uint16_t led = 1;
   uint16_t l = led;
   for (int i = 0; i < 4; i++) {
-    tm1638Send(numbers[i]);
-    tm1638Send((l & 1) | ((l >> 7) & 2));
+    tm1638Send(numbers[i], numbers[i], numbers[i]);
+    tm1638Send((l & 1) | ((l >> 7) & 2), (l & 1) | ((l >> 7) & 2), (l & 1) | ((l >> 7) & 2));
     l >>= 1;
   }
   for (int i = 0; i < 4; i++) {
-    tm1638Send(numbers[i + 4]);
-    tm1638Send((l & 1) | ((l >> 7) & 2));
+    tm1638Send(numbers[i + 4], numbers[i + 4], numbers[i + 4]);
+    tm1638Send((l & 1) | ((l >> 7) & 2), (l & 1) | ((l >> 7) & 2), (l & 1) | ((l >> 7) & 2));
     l >>= 1;
   }
   static uint8_t ledDelay = 0;
@@ -349,33 +376,50 @@ void loop() {
 
   // read keys
   digitalWrite(TM1638_STB_PIN, LOW);
-  tm1638Send(0x42);
+  tm1638Send(0x42, 0x42, 0x42);
   pinMode(TM1638_DIO_1_PIN, INPUT);
+  pinMode(TM1638_DIO_2_PIN, INPUT);
+  pinMode(TM1638_DIO_3_PIN, INPUT);
   digitalWrite(TM1638_DIO_1_PIN, LOW);
+  digitalWrite(TM1638_DIO_2_PIN, LOW);
+  digitalWrite(TM1638_DIO_3_PIN, LOW);
   delay(1);
   digitalWrite(TEST_PIN, 1);
-  uint32_t keys = tm1638Read();
-  keys |= uint32_t(tm1638Read()) << 8;
-  keys |= uint32_t(tm1638Read()) << 16;
-  keys |= uint32_t(tm1638Read()) << 24;
+  uint32_t keys1 = tm1638Read();
+  uint32_t keys2 = tm1638Read();
+  uint32_t keys3 = tm1638Read();
+  uint32_t keys4 = tm1638Read();
   digitalWrite(TEST_PIN, 0);
   digitalWrite(TM1638_STB_PIN, HIGH);
   pinMode(TM1638_DIO_1_PIN, OUTPUT);
+  pinMode(TM1638_DIO_2_PIN, OUTPUT);
+  pinMode(TM1638_DIO_3_PIN, OUTPUT);
 
-  // show first key
-  int key = -1;
-  for (int i = 0; i < 32; i++) {
-    if (bitRead(keys, i)) {
-      key = i;
-      break;
-    }
+  // show keys
+  static uint32_t oldKeys1 = -1;
+  if (keys1 != oldKeys1) {
+    oldKeys1 = keys1;
+    Serial.print("keys1: ");
+    Serial.println(keys1);
   }
-  static int oldKey = -1;
-  if (key != oldKey) {
-    oldKey = key;
-    if (key >= 0) {
-      key = keyMap[key];
-      Serial.println(key);
-    }
+  static uint32_t oldKeys2 = -1;
+  if (keys2 != oldKeys2) {
+    oldKeys2 = keys2;
+    Serial.print("keys2: ");
+    Serial.println(keys2);
   }
+  static uint32_t oldKeys3 = -1;
+  if (keys3 != oldKeys3) {
+    oldKeys3 = keys3;
+    Serial.print("keys3: ");
+    Serial.println(keys3);
+  }
+  static uint32_t oldKeys4 = -1;
+  if (keys4 != oldKeys4) {
+    oldKeys4 = keys4;
+    Serial.print("keys4: ");
+    Serial.println(keys4);
+  }
+
+  delay(1);
 }

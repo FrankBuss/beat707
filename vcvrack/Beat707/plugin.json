@@ -1,0 +1,23 @@
+{
+  "slug": "Beat707",
+  "name": "Beat707",
+  "version": "2.0.0",
+  "license": "proprietary",
+  "brand": "Beat707",
+  "author": "Frank Buss",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "Beat707Simulation",
+      "name": "Beat707Simulation",
+      "description": "",
+      "tags": []
+    }
+  ]
+}
