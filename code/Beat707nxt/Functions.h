@@ -4,6 +4,9 @@
  * 
  */
 
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
 #include "hardware.h"
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -103,3 +106,5 @@ void checkIfMidiCCok();
 void checkIfEchoOK();
 void pulseOut(bool enable);
 char getBankLetter(byte value);
+
+#endif

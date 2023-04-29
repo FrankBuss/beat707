@@ -267,7 +267,9 @@ void checkPatternStream()
   if (loadPatternNow)
   {
     loadPattern(nextPattern, true);
-    loadPatternNow = streamNextPattern = ignoreButtons = false;
+    loadPatternNow = false;
+    streamNextPattern = false;
+    ignoreButtons = false;
     resetProgramChangeAndCC();
   }
 }

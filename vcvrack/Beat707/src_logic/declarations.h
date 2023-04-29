@@ -1,7 +1,30 @@
+#ifndef DECLARATIONS_H
+#define DECLARATIONS_H
+
 #include <string.h>
 #include <stdint.h>
 
 #include "hardware.h"
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#define DISABLE_FLASH 1       // When set it won't use the external flash ic
+#define INTRO_ANIMATION 1     // When set will show a random animation them the product name, version and company name
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#define INIT_FLASH_MEMORY 1   // Warning, this will erase the entire flash contents
+#define INIT_ENTIRE_FLASH 1   // When selected with the above, the entire flash chip will be erased first. This takes around 20 seconds or less to perform before we can write data to the flash chip. If this is not set, the code will erase the flash chip by sector, which takes a bit more time to perform.
+#define SHOW_FREE_RAM 0       // Will show how much RAM is left on the display during initiation
+#define DEBUG_SERIAL 0        // Sets the serial output to 9600 bauds and sends some debuging information out.
+#define DEBUG_MIDI_INPUT 0    // When set the whole unit will operate only to display midi input messages. You will need to set DRUM_TRACKS and NOTE_TRACKS to 1, as this Debug mode uses a lot of memory to store data. Pressing STOP clears the buffer, and pressing +/- shows next/previous event recorded. Pressing the last button on the right toggles between HEX or normal values for the messages.
+#define MIDI_OVER_USB 0       // When set will use 38400 bauds for the Serial interface
+#define MIDI_IN_TO_PATTERN 1  // When set it will use any MIDI NOTE Input on the selected MIDI Channel (default 1) to select the next playing pattern. Starting from MIDI_IN_START_NOTE
+#define MIDI_IN_START_NOTE 24 // MIDI Input to Pattern Selection Starting Note
+#define RECORD_ENABLED_ECHO 1 // Enables the midi thru echo on all input notes
+#define RECORD_FORCE_VEL 1    // When set velocity will always be the maximum for note track recording
+#define EXTERNAL_CLOCK 0      // When set external clock is set by default
+#define EXTERNAL_CONTINUE 0   // When set will use it to continue the sequener clock
+#define TRACK_DEBUG_MIDI 0    // When set the code will store the last 4 bytes of MIDI Input Message and show those values when you hold the track selector button (Bt#8 on the left).
+
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #define DEFAULT_NOTE 36       // When adding a new note the default note value for the very first note - Set to 0 so it asks what is the default note everytime you add the first one on a pattern
@@ -69,7 +92,7 @@ enum
 };
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-extern byte segments[3][8];
+extern byte segments[3][16];
 extern byte leds[3];
 extern byte buttons[3]; // raw button values
 extern byte buttonEvent[3][8];
@@ -110,7 +133,7 @@ extern byte lastVelocity;
 extern bool editingNote;
 extern byte editStep;
 extern byte editVariation;
-extern byte prevPlayedNote[NOTE_TRACKS];
+extern byte prevPlayedNote[NOTE_TRACKS + DRUM_TRACKS];
 extern byte menuPosition;
 extern byte initMode;
 extern char flashHeader[8];
@@ -340,6 +363,7 @@ extern WCONFIG configData;
 #define S_H        0B01110110
 #define S__        0B00001000
 #define S_DOT      0B10000000
-extern const byte stepChars[4];
-extern const byte numbers[10];
+extern byte stepChars[4];
+extern byte numbers[10];
 
+#endif

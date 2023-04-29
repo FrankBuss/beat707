@@ -71,13 +71,14 @@
 #define TRACK_DEBUG_MIDI 0    // When set the code will store the last 4 bytes of MIDI Input Message and show those values when you hold the track selector button (Bt#8 on the left).
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#include "hardware.h"
+#include "Lib_Flash.h"
 #include "Functions.h"
 #include "Variables.h"
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setup()
 {
+  DDRC = 0xFF; // For the Pulse-Out (analog pins, A54 Header)
   pulseOut(false);
   //
   startMIDIinterface();

@@ -1,3 +1,6 @@
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
 /*
  * 
  * Created by William Kalfelz @ Beat707 (c) 2018 - http://www.Beat707.com
@@ -101,3 +104,5 @@ void checkIfMidiCCok();
 void checkIfEchoOK();
 void pulseOut(bool enable);
 char getBankLetter(byte value);
+
+#endif

@@ -531,7 +531,8 @@ void resetSequencer()
   currentPlaysPattern = currentPlaysChain = 0;  
   recordBufferPosition = 0;
   //
-  midiOutputBufferDTPosition = midiOutputBufferDTPosition = 0;
+  midiOutputBufferDTPosition = 0;
+  midiOutputBufferNTPosition = 0;
   memset(midiOutputBufferDT, 0, sizeof(midiOutputBufferDT));
   memset(midiOutputBufferNT, 0, sizeof(midiOutputBufferNT));
   memset(noteLenCounters, 0, sizeof(noteLenCounters));

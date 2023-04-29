@@ -12,16 +12,27 @@
 #define min(a,b) (((a)<(b))?(a):(b))
 #define max(a,b) (((a)>(b))?(a):(b))
 
-int random(int min, int max);
-
-typedef uint8_t byte;
-
 #define bitSet(v, p) ((v) |= 1 << (p))
 #define bitRead(v, p) (((v) & (1 << (p))) > 0 ? 1 : 0)
 #define bitClear(v, p) ((v) &= ~(1 << (p)))
 
+typedef uint8_t byte;
+
+extern byte segments[3][16];
+extern byte leds[3];
+
+int random(int min, int max);
+
 void midi_write(uint8_t data);
 bool midi_available();
 uint8_t midi_read();
+
+void waitMs(int mstime);
+void setup();
+void loop();
+
+void logic_init();
+
+void sendScreen();
 
 #endif

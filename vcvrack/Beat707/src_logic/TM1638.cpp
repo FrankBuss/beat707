@@ -4,6 +4,7 @@
  * 
  */
 
+#include <stdio.h>
 #include "declarations.h"
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -86,22 +87,6 @@ void sendDataConst(byte data1, byte data2, byte data3)
     //
     CLOCK_HIGH;
   }
-#endif
-}
-
-// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-void sendScreen()
-{
-#if 0
-  sendData(0x40); // set auto increment mode
-  STROBE_LOW;
-  sendDataConst(0xc0, 0xc0, 0xc0); // Start Address
-  for (byte x=0; x<8; x++)
-  {
-    sendDataConst(segments[0][x], segments[1][x], segments[2][x]);
-    sendDataConst(bitRead(leds[0],x), bitRead(leds[1],x), bitRead(leds[2],x));
-  }
-  STROBE_HIGH;
 #endif
 }
 
@@ -337,31 +322,27 @@ void printMIDInote(byte note, byte segment, byte offset, byte offsetOctave)
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void sendScreenAndWait(int wait)
 {
-#if 0
   sendScreen();
   waitMs(wait); 
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void splashScreen()
 {
-#if 0
   #if INTRO_ANIMATION
-    randomSeed(analogRead(0));
     uint32_t doneCrazy = 0x00;
     while (doneCrazy != 0xFFFFFF)
     {
       for (int xs = 0; xs < 8; xs++)
       {
-        segments[0][xs] = random(0xFF);
-        segments[1][xs] = random(0xFF);
-        segments[2][xs] = random(0xFF);
+        segments[0][xs] = random(0, 0xFF);
+        segments[1][xs] = random(0, 0xFF);
+        segments[2][xs] = random(0, 0xFF);
       }
       //
-      leds[0] = random(0xFF);
-      leds[1] = random(0xFF);
-      leds[2] = random(0xFF);
+      leds[0] = random(0, 0xFF);
+      leds[1] = random(0, 0xFF);
+      leds[2] = random(0, 0xFF);
       //
       for (int xs = 0; xs < 8; xs++)
       {
@@ -384,8 +365,9 @@ void splashScreen()
       //
       sendScreenAndWait(28);
       //
-      bitSet(doneCrazy, random(24));
+      bitSet(doneCrazy, random(0, 24));
     }
+      printf("crazy done\n");
     //
     memset(segments, 0, sizeof(segments));
     leds[0] = leds[1] = leds[2] = 0x00;
@@ -458,5 +440,4 @@ void splashScreen()
     sendScreen();
     waitMs(500);  
   #endif
-#endif
 }
