@@ -20,6 +20,7 @@ typedef uint8_t byte;
 
 extern byte segments[3][16];
 extern byte leds[3];
+extern byte buttons[3];
 
 int random(int min, int max);
 

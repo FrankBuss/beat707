@@ -2,8 +2,9 @@
 #include "hardware.h"
 
 #include "rack.hpp"
-#include "gui.h"
 using namespace rack;
+using namespace rack::math;
+#include "gui.h"
 
 struct SegmentDisplay2 : TransparentWidget {
     volatile bool segments[7] = {false, false, false, false, false, false, false};
@@ -36,6 +37,52 @@ struct SegmentDisplay2 : TransparentWidget {
 		nvgFillColor(vg, dot ? color : color_off);
 		nvgFill(vg);
 	}
+};
+
+struct LED : TransparentWidget {
+    volatile bool on;
+    NVGcolor color = nvgRGB(0xFF, 0x00, 0x00);
+    NVGcolor color_off = nvgRGB(0x20, 0x00, 0x00);
+
+    void draw(const DrawArgs &args) override {
+        NVGcontext *vg = args.vg;
+
+		nvgBeginPath(vg);
+		nvgCircle(vg, 0, 0, 2);
+		nvgFillColor(vg, on ? color : color_off);
+		nvgFill(vg);
+	}
+};
+
+struct MyButton : rack::app::ParamWidget {
+    bool pressed = false;
+    NVGcolor color = nvgRGB(0x50, 0x50, 0x50);
+    NVGcolor color_off = nvgRGB(0x00, 0x00, 0x00);
+
+    void onButton(const rack::event::Button &e) override {
+        if (e.button == GLFW_MOUSE_BUTTON_LEFT) {
+            if (e.action == GLFW_PRESS) {
+                pressed = true;
+                e.consume(this);
+            } else if (e.action == GLFW_RELEASE) {
+                pressed = false;
+                e.consume(this);
+            }
+        }
+        else if (e.button == GLFW_MOUSE_BUTTON_RIGHT && e.action == GLFW_PRESS) {
+            pressed = !pressed;
+            e.consume(this);
+        }
+    }
+
+    void draw(const DrawArgs &args) override {
+        NVGcontext *vg = args.vg;
+
+        nvgBeginPath(vg);
+        nvgCircle(vg, box.size.x / 2, box.size.y / 2, box.size.x / 2);
+        nvgFillColor(vg, pressed ? color : color_off);
+        nvgFill(vg);
+    }
 };
 
 
@@ -82,8 +129,10 @@ static struct Beat707SimulationWidget *theWidget;
 
 struct Beat707SimulationWidget : ModuleWidget {
 	SegmentDisplay2 *display[24];
+	LED *leds[24];
+	MyButton *buttons[24];
 
-	void add4x7segment(rack::math::Vec pos, int start) {
+	void add4x7segment(Vec pos, int start) {
 		for (int i = 0; i < 4; i++) {
 			SegmentDisplay2 *d = new SegmentDisplay2();
 			d->box.pos = pos;
@@ -92,6 +141,24 @@ struct Beat707SimulationWidget : ModuleWidget {
 			addChild(d);
 			display[start + i] = d;
 		}
+	}
+
+	void addLED(Vec pos, int number) {
+		LED *l = new LED();
+		l->box.pos = pos;
+		l->box.size = Vec(20, 20);
+		addChild(l);
+		leds[number] = l;
+	}
+
+	void addButton(Vec pos, int number) {
+		MyButton *b = new MyButton();
+		b->box.pos = pos;
+		b->box.pos.x -= 10;
+		b->box.pos.y -= 10;
+		b->box.size = Vec(20, 20);
+		addChild(b);
+		buttons[number] = b;
 	}
 
 	Beat707SimulationWidget(Beat707Simulation* module) {
@@ -109,7 +176,67 @@ struct Beat707SimulationWidget : ModuleWidget {
 		add4x7segment(lcd4.pos, 12);
 		add4x7segment(lcd5.pos, 16);
 		add4x7segment(lcd6.pos, 20);
+
+		memset(leds, 0, sizeof(leds));
+		addLED(led4, 4);
+		addLED(led5, 5);
+		addLED(led6, 6);
+		addLED(led7, 7);
+		addLED(led8, 8);
+		addLED(led9, 9);
+		addLED(led10, 10);
+		addLED(led11, 11);
+		addLED(led12, 12);
+		addLED(led13, 13);
+		addLED(led14, 14);
+		addLED(led15, 15);
+		addLED(led16, 16);
+		addLED(led17, 17);
+		addLED(led18, 18);
+		addLED(led19, 19);
+		addLED(led20, 20);
+		addLED(led21, 21);
+		addLED(led22, 22);
+		addLED(led23, 23);
+
+		addButton(button_play, 0);
+		addButton(button_stop, 1);
+		addButton(button_del, 2);
+		addButton(button_add, 3);
+		addButton(button_accent, 4);
+		addButton(button_mode, 5);
+		addButton(button_patt_section, 6);
+		addButton(button_mode, 7);
+		addButton(button1, 8);
+		addButton(button2, 9);
+		addButton(button3, 10);
+		addButton(button4, 11);
+		addButton(button5, 12);
+		addButton(button6, 13);
+		addButton(button7, 14);
+		addButton(button8, 15);
+		addButton(button9, 16);
+		addButton(button10, 17);
+		addButton(button11, 18);
+		addButton(button12, 19);
+		addButton(button13, 20);
+		addButton(button14, 21);
+		addButton(button15, 22);
+		addButton(button16, 23);
 	}
+
+    void step() override {
+		uint32_t nb = 0;
+		for (int i = 0; i < 24; i++) {
+			if (buttons[i]->pressed) nb |= 1 << i;
+		}
+		::buttons[0] = nb & 0xff;
+		::buttons[1] = (nb >> 8) & 0xff;
+		::buttons[2] = (nb >> 16) & 0xff;
+		printf("buttons: %i\n", nb);
+
+        ModuleWidget::step();
+    }	
 
 	void appendContextMenu(Menu* menu) override {
 		Beat707Simulation* module = dynamic_cast<Beat707Simulation*>(this->module);
@@ -141,6 +268,11 @@ void sendScreen() {
 			theWidget->display[i]->segments[5] = s & 32;
 			theWidget->display[i]->segments[6] = s & 64;
 			theWidget->display[i]->dot = s & 128;
+		}
+		for (int i = 0; i < 24; i++) {
+			if (theWidget->leds[i]) {
+				theWidget->leds[i]->on = ::leds[i / 8] & (1 << (i & 7));
+			}
 		}
 	}
 }
