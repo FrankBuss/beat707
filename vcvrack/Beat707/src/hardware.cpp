@@ -7,20 +7,23 @@
 
 using namespace std;
 
+ByteQueue midiInQueue;
+ByteQueue midiOutQueue;
+
 int random(int min, int max) {
    return min + rand() % (max - min);
 }
 
 void midi_write(uint8_t data) {
-
+    midiOutQueue.push(data);
 }
 
 bool midi_available() {
-    return false;
+    return !midiInQueue.empty();
 }
 
 uint8_t midi_read() {
-    return 0;
+    return midiInQueue.pop();
 }
 
 void waitMs(int mstime)
@@ -36,17 +39,25 @@ void setupAndLoopHandler() {
     setup();
     while (true) {
         loop();
-        this_thread::sleep_for(chrono::milliseconds(100)); // Sleep for 10 ms (100 Hz)
+        this_thread::sleep_for(chrono::milliseconds(1));
     }
 }
 
-void interruptHandler() {
-    while (true) {
-        this_thread::sleep_for(chrono::milliseconds(100)); // Sleep for 10 ms (100 Hz)
+#include <chrono>
+#include <thread>
 
-        // Your interrupt code here
-        {
-            printf("i\n");
+void interruptHandler() {
+    using namespace std::chrono;
+    while (true) {
+        steady_clock::time_point now = steady_clock::now();
+        int buffered_OCR1A = OCR1A;
+        if (buffered_OCR1A > 0) {
+            double desired_interval = 1.0 / buffered_OCR1A;
+            interrupt();
+            duration<double> elapsed_time = duration_cast<duration<double>>(steady_clock::now() - now);
+            this_thread::sleep_for(duration<double>(desired_interval - elapsed_time.count()));
+        } else {
+            this_thread::sleep_for(milliseconds(10));
         }
     }
 }

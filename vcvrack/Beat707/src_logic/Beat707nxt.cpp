@@ -59,11 +59,11 @@
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 byte segments[3][16];
 byte leds[3];
-byte buttons[3]; // raw button values
-byte buttonEvent[3][8];
-byte buttonEventWasHolding[3] = {0, 0, 0};
+byte buttons[4]; // raw button values
+byte buttonEvent[4][8];
+byte buttonEventWasHolding[4] = {0, 0, 0, 0};
 byte buttonIsHolding[8];
-byte buttonDownTime[3][8]; // time of the button press
+byte buttonDownTime[4][8]; // time of the button press
 byte variation = 0; // ABCD Variations
 char forceVariation = -1;
 byte curTrack = 0;
@@ -170,6 +170,7 @@ WCONFIG configData;
 byte stepChars[4] = { 0B00000000, 0B00001000, 0B01010100, 0B00110111 };
 byte numbers[10] = { 0B00111111, 0B00000110, 0B01011011, 0B01001111, 0B01100110, 0B01101101, 0B01111101, 0B00000111, 0B01111111, 0B01100111};
 
+volatile int OCR1A;
 
 
 

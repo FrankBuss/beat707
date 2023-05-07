@@ -33,61 +33,16 @@
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void initTM1638()
 {
-#if 0
-  DDRB = 0B11101111; // PB4 is INPUT for MISO on Flash SPI //
-  PORTB = 0B11111111; // Also set SS Flash HIGH //
-  DDRD = 0B11111111;
-  //
-  S_C_HIGH;
-  SETI123_LOW;
-  //
-  sendData(0x8F); // Init
-  //
-  sendData(0x40); // set auto increment mode
-  STROBE_LOW;
-  sendDataConst(0xc0, 0xc0, 0xc0); // Start Address
-  SETI123_LOW;
-  for(uint8_t i = 0; i < (16 * 8); i++)
-  {
-    CLOCK_LOW;
-    waitMs(0);
-    CLOCK_HIGH;
-  }
-  STROBE_HIGH;
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void sendData(byte data)
 {
-#if 0
-  STROBE_LOW;
-  for (byte x=0; x<8; x++)
-  {
-    CLOCK_LOW;
-    if (bitRead(data, x) == 0) SETI123_LOW; else SETI123_HIGH;
-    CLOCK_HIGH;
-  }
-  STROBE_HIGH;
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void sendDataConst(byte data1, byte data2, byte data3)
 {
-#if 0
-  for (byte x=0; x<8; x++)
-  {
-    CLOCK_LOW;
-    //
-    PORTD &= 0B00011111;
-    if (bitRead(data1, x) == 1) PORTD |= B00100000;
-    if (bitRead(data2, x) == 1) PORTD |= B01000000;
-    if (bitRead(data3, x) == 1) PORTD |= B10000000;
-    //
-    CLOCK_HIGH;
-  }
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -95,7 +50,7 @@ void readButtons(void)
 {
   for (byte x=0; x < 8; x++)
   {
-    for (byte i = 0; i < 3; i++)
+    for (byte i = 0; i < 4; i++)
     {
       if (bitRead(buttons[i], x) && (!ignoreButtons || (i == 0 && x <= 1 && curRightScreen != kMuteMenu) || (i == 2 && x == 7 && curRightScreen == kMuteMenu)))
       {
@@ -173,7 +128,6 @@ void readButtons(void)
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void printNumber(byte segment, byte offset, int number)
 {
-#if 0
   bool isPositive = true;
   if (number < 0) 
   {
@@ -191,41 +145,13 @@ void printNumber(byte segment, byte offset, int number)
   //
   segments[segment][offset + 2] = (char)numbers[0 + number];
   //
-  if (!isPositive) segments[segment][offset] = B01000000;
-#endif
+  if (!isPositive) segments[segment][offset] = 0B01000000;
 }
-
-#if 0
-// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#if SHOW_FREE_RAM
-  extern unsigned int __data_start;
-  extern unsigned int __data_end;
-  extern unsigned int __bss_start;
-  extern unsigned int __bss_end;
-  extern unsigned int __heap_start;
-  extern void *__brkval;
-  
-  void freeMemory(void)
-  {
-    int free_memory;
-    if((int)__brkval == 0) free_memory = ((int)&free_memory) - ((int)&__bss_end);
-      else free_memory = ((int)&free_memory) - ((int)__brkval);
-    if (free_memory > 999)
-    {
-      int x = free_memory / 1000;
-      segments[2][0] = (char)numbers[0 + x];
-      free_memory -= x * 1000;
-    }
-    printNumber(2, 1, free_memory);
-  }
-#endif
-#endif
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void showErrorMsg(byte error) { showErrorMsg(error, false); }
 void showErrorMsg(byte error, bool errors)
 {
-#if 0
   memset(segments, 0, sizeof(segments));
   segments[2][0] = S_E;
   segments[2][1] = S_r;
@@ -237,13 +163,11 @@ void showErrorMsg(byte error, bool errors)
   sendScreen();
   if (totalFlashErrors < 0xFF) totalFlashErrors++;
   waitMs(2000);
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void showWaitMsg(char porcentage)
 {
-#if 0
   memset(segments, 0, sizeof(segments));
   segments[2][0] = 0x3c;
   segments[2][1] = 0x1e;
@@ -252,22 +176,18 @@ void showWaitMsg(char porcentage)
   segments[2][4] = S_T;
   if (porcentage >=0) printNumber(2, 5, porcentage);
   sendScreen();
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void printDashDash(byte segment, byte offset)
 {
-#if 0
   segments[segment][offset] = S_DASH;
   segments[segment][offset + 1] = S_DASH;
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void printMIDInote(byte note, byte segment, byte offset, byte offsetOctave)
 {
-#if 0
   byte xNote = note - ((note / 12) * 12);
   switch (xNote)
   {
@@ -288,7 +208,6 @@ void printMIDInote(byte note, byte segment, byte offset, byte offsetOctave)
   byte xn = (note / 12);
   if (xn >= 10) xn = 9;
   segments[segment][offsetOctave] = (char)numbers[xn];
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

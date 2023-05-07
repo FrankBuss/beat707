@@ -31,51 +31,42 @@ void checkIfDataNeedsSaving()
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void eraseSector(uint16_t _pagePos)
 {
-#if 0
   #if !DISABLE_FLASH
     if (!flash.eraseSector(_pagePos, 0)) showErrorMsg(flash.error());  
   #endif
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void saveConfigData(byte _eraseSector)
 {
-#if 0
   #if !DISABLE_FLASH
     stopTimer(true);
     if (_eraseSector) eraseSector(16 + (currentPatternBank * ((16 * 16) + 16)));
     if (!flash.writeAnything     (16 + (currentPatternBank * ((16 * 16) + 16)), (uint8_t) 0, configData)) showErrorMsg(flash.error());  
     startTimer(true);
   #endif
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void savePatternData(byte _eraseSector)
 {
-#if 0
   #if !DISABLE_FLASH
     if (_eraseSector) eraseSector(16 + (currentPatternBank * ((16 * 16) + 16)) + (currentPattern * 16) + 16);
     if (!flash.writeAnything     (16 + (currentPatternBank * ((16 * 16) + 16)) + (currentPattern * 16) + 16, (uint8_t) 0, patternData)) showErrorMsg(flash.error());   
   #endif
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void saveStepsData()
 {
-#if 0
   #if !DISABLE_FLASH
     if (!flash.writeAnything     (16 + 1 + (currentPatternBank * ((16 * 16) + 16)) + (currentPattern * 16) + 16, (uint8_t) 0, stepsData)) showErrorMsg(flash.error());
   #endif
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void loadPattern(byte pattern, bool force)
 {
-#if 0
   checkIfDataNeedsSaving();
   //
   if (!seqPlaying || force)
@@ -107,7 +98,6 @@ void loadPattern(byte pattern, bool force)
     streamNextPattern = true;
     ignoreButtons = true;
   }
-#endif
 }
 
 /*
@@ -143,14 +133,12 @@ void loadPattern(byte pattern, bool force)
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void flashInit(bool force)
 {
-#if 0
   #if !DISABLE_FLASH
     totalFlashErrors = 0;
-    if (!flash.begin(FLASH_CHIPSIZE)) { showErrorMsg(127); }
-    waitMs(120);
     if (!flash.readAnything(0, (uint8_t) 0, flashHeader)) showErrorMsg(flash.error());
     //
-    if (flashHeader[0] != 'B' || flashHeader[1] != '7' || flashHeader[2] != '0' || flashHeader[3] != '7' || flashHeader[4] != 'V' || flashHeader[5] != FLASH_VERSION) showErrorMsg(99);
+    // TODO: no auto-format, to avoid erasing everything if an error happens
+    if (flashHeader[0] != 'B' || flashHeader[1] != '7' || flashHeader[2] != '0' || flashHeader[3] != '7' || flashHeader[4] != 'V' || flashHeader[5] != FLASH_VERSION) force = true;
     //
     #if INIT_FLASH_MEMORY
       force = true;
@@ -209,20 +197,17 @@ void flashInit(bool force)
       startTimer(false);
     }
   #endif
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void saveHeader(bool sectorErase)
 {
-#if 0
   createFlashHeader();
   //
   #if !DISABLE_FLASH
     if (sectorErase) eraseSector(0);
     if (!flash.writeAnything(0, (uint8_t) 0, flashHeader)) showErrorMsg(flash.error());
   #endif
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -239,7 +224,6 @@ void createFlashHeader()
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void initPatternBank(byte patternBank, bool sectorErase, int &porc, bool patternBankOnly)
 {
-#if 0
   pagePos = 16 + (patternBank * ((16 * 16) + 16));
   //
   #if !DISABLE_FLASH
@@ -258,7 +242,6 @@ void initPatternBank(byte patternBank, bool sectorErase, int &porc, bool pattern
       if (patternBankOnly) showWaitMsg(porc * 2); else showWaitMsg(byte(porc / 20));
     } 
   #endif
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -277,7 +260,6 @@ void checkPatternStream()
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void loadPatternBank(byte patternBank)
 {
-#if 0
   currentPattern = nextPattern = 0;
   currentPatternBank = nextPatternBank = patternBank;
   loadPattern(0);
@@ -285,7 +267,6 @@ void loadPatternBank(byte patternBank)
   #if !DISABLE_FLASH
     if (!flash.readAnything((16 + (currentPatternBank * ((16 * 16) + 16))), (uint8_t) 0, configData)) showErrorMsg(flash.error()); 
   #endif
-#endif
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

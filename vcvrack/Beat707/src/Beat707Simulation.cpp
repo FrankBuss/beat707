@@ -119,8 +119,19 @@ struct Beat707Simulation : Module {
 	void process(const ProcessArgs& args) override {
 		midi::Message msg;
 		while (midiInput.tryPop(&msg, args.frame)) {
-			midiOutput.sendMessage(msg);
+			for (size_t i = 0; i < msg.bytes.size(); i++) {
+				midiInQueue.push(msg.bytes[i]);
+			}
 		}
+		midi::Message out;
+		out.bytes = std::vector<uint8_t>();
+		while (!midiOutQueue.empty()) {
+			out.bytes.push_back(midiOutQueue.pop());
+			if (out.bytes.size() == 3) {
+				break;
+			}
+		}
+		midiOutput.sendMessage(out);
 	}
 };
 
@@ -130,7 +141,7 @@ static struct Beat707SimulationWidget *theWidget;
 struct Beat707SimulationWidget : ModuleWidget {
 	SegmentDisplay2 *display[24];
 	LED *leds[24];
-	MyButton *buttons[24];
+	MyButton *buttons[32];
 
 	void add4x7segment(Vec pos, int start) {
 		for (int i = 0; i < 4; i++) {
@@ -199,14 +210,15 @@ struct Beat707SimulationWidget : ModuleWidget {
 		addLED(led22, 22);
 		addLED(led23, 23);
 
+		memset(buttons, 0, sizeof(buttons));
 		addButton(button_play, 0);
 		addButton(button_stop, 1);
 		addButton(button_del, 2);
 		addButton(button_add, 3);
-		addButton(button_accent, 4);
-		addButton(button_mode, 5);
-		addButton(button_patt_section, 6);
-		addButton(button_mode, 7);
+		addButton(button_mode, 4);
+		addButton(button_patt_section, 5);
+		addButton(button_load_patt, 6);
+		addButton(button_track, 7);
 		addButton(button1, 8);
 		addButton(button2, 9);
 		addButton(button3, 10);
@@ -223,17 +235,20 @@ struct Beat707SimulationWidget : ModuleWidget {
 		addButton(button14, 21);
 		addButton(button15, 22);
 		addButton(button16, 23);
+		//addButton(button_patt_section, 24);
 	}
 
     void step() override {
 		uint32_t nb = 0;
-		for (int i = 0; i < 24; i++) {
-			if (buttons[i]->pressed) nb |= 1 << i;
+		for (int i = 0; i < 32; i++) {
+			if (buttons[i]) {
+				if (buttons[i]->pressed) nb |= 1 << i;
+			}
 		}
 		::buttons[0] = nb & 0xff;
 		::buttons[1] = (nb >> 8) & 0xff;
 		::buttons[2] = (nb >> 16) & 0xff;
-		printf("buttons: %i\n", nb);
+		::buttons[3] = (nb >> 24) & 0xff;
 
         ModuleWidget::step();
     }	

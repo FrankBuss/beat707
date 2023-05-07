@@ -19,7 +19,6 @@
 #define ECHOS 2               // Depends on RAM left, usually can't go above 9
 #define STEPS 16              // This can't go above 16
 #define TEMPORARY_MESSAGE_TIME 80
-#define EXTERNAL_CLOCK_TIMER (F_CPU / 3960) // Timer speed used to read the External MIDI Clock - MIDI is 31250 bauds = 3906 bytes per second
 #define MIDI_INPUT_BUFFER (4 * 2) // The size of the internal buffer used for recording
 #define DEBUG_MIDI_BUFFER_SIZE 512
 #define FLASH_CHIPSIZE MB64
@@ -139,10 +138,10 @@ struct WCONFIG
   byte trackMidiCH[DRUM_TRACKS+NOTE_TRACKS]; // 0~15 
   byte accentValues[3];
   byte BPM;
-  bool seqSyncOut;
+  volatile bool seqSyncOut;
   uint32_t muteTrack;
   byte midiInputToPatternChannel;
-  bool midiClockInternal;
+  volatile bool midiClockInternal;
   bool writeProtectFlash;
   byte tickOut;
   byte tickOutLen;

@@ -12,8 +12,7 @@
 #define PPQ 24
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#if 0
-ISR(TIMER1_COMPA_vect) 
+void interrupt()
 {
   if (configData.midiClockInternal) 
   {
@@ -30,12 +29,11 @@ ISR(TIMER1_COMPA_vect)
     startTimer(true);
   }
 }
-#endif
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void outputMIDIBuffer()
 {
-  while (calculateSequencer > 0) { doTickSequencer(); }
+  //while (calculateSequencer > 0) { doTickSequencer(); }
   sendOutputMIDIBuffer();
 }
 
@@ -627,11 +625,7 @@ void startTimer(bool force)
 {
   if (configData.midiClockInternal || force)
   {
-    //TCCR1A = TCCR1B = 0;
-    //if (configData.midiClockInternal) bitWrite(TCCR1B, CS11, 1); else bitWrite(TCCR1B, CS10, 1);
-    //bitWrite(TCCR1B, WGM12, 1);
     updateSequencerSpeed(false);
-    //bitWrite(TIMSK1, OCIE1A, 1); 
   }
 }
 
@@ -640,8 +634,7 @@ void stopTimer(bool force)
 {
   if (configData.midiClockInternal || force)
   {
-    //bitWrite(TIMSK1, OCIE1A, 0);
-    //TCCR1A = TCCR1B = OCR1A = 0; 
+    OCR1A = 0; 
   }
 }
 
@@ -651,7 +644,7 @@ void updateSequencerSpeed(bool force)
   // Calculates the Frequency for the Timer, used by the PPQ clock (Pulses Per Quarter Note) //
   // This uses the 16-bit Timer1, unused by the Arduino, unless you use the analogWrite or Tone functions //
   //
-  //if (configData.midiClockInternal || force) OCR1A = (F_CPU / 8) / ((((configData.BPM)*(PPQ))/60)) - 1;    
+  if (configData.midiClockInternal || force) OCR1A = configData.BPM*PPQ/60;
 }
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -661,7 +654,7 @@ void setupTimerForExternalMIDISync(bool active)
   if (active)
   {
     stopTimer(true);
-    //OCR1A = EXTERNAL_CLOCK_TIMER;
+    OCR1A = EXTERNAL_CLOCK_TIMER;
     startTimer(true);
   }
   else
@@ -730,21 +723,8 @@ void sendMidiEvent(byte type, byte byte1, byte byte2, byte channel, byte slot)
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void startMIDIinterface()
 {
-#if 0
-  #if DEBUG_SERIAL
-    Serial.begin(9600);
-    Serial.println("Startup");
-  #else
-    #if MIDI_OVER_USB 
-      Serial.begin(38400); 
-    #else 
-      Serial.begin(31250); // 31250 MIDI Interface //
-    #endif
-    Serial.flush();
     resetSequencer();
     MIDIallNotesOff();
-  #endif
-#endif
 } 
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

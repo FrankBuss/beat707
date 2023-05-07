@@ -5,10 +5,11 @@
 #include <stdint.h>
 
 #include "hardware.h"
+#include "flash.h"
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#define DISABLE_FLASH 1       // When set it won't use the external flash ic
-#define INTRO_ANIMATION 1     // When set will show a random animation them the product name, version and company name
+#define DISABLE_FLASH 0       // When set it won't use the external flash ic
+#define INTRO_ANIMATION 0     // When set will show a random animation them the product name, version and company name
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #define INIT_FLASH_MEMORY 1   // Warning, this will erase the entire flash contents
@@ -36,7 +37,7 @@
 #define ECHOS 2               // Depends on RAM left, usually can't go above 9
 #define STEPS 16              // This can't go above 16
 #define TEMPORARY_MESSAGE_TIME 80
-#define EXTERNAL_CLOCK_TIMER (F_CPU / 3960) // Timer speed used to read the External MIDI Clock - MIDI is 31250 bauds = 3906 bytes per second
+#define EXTERNAL_CLOCK_TIMER 3960 // Timer speed used to read the External MIDI Clock - MIDI is 31250 bauds = 3906 bytes per second
 #define MIDI_INPUT_BUFFER (4 * 2) // The size of the internal buffer used for recording
 #define DEBUG_MIDI_BUFFER_SIZE 512
 #define FLASH_CHIPSIZE MB64
@@ -94,11 +95,11 @@ enum
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 extern byte segments[3][16];
 extern byte leds[3];
-extern byte buttons[3]; // raw button values
-extern byte buttonEvent[3][8];
-extern byte buttonEventWasHolding[3];
+extern byte buttons[4]; // raw button values
+extern byte buttonEvent[4][8];
+extern byte buttonEventWasHolding[4];
 extern byte buttonIsHolding[8];
-extern byte buttonDownTime[3][8]; // time of the button press
+extern byte buttonDownTime[4][8]; // time of the button press
 extern byte variation; // ABCD Variations
 extern char forceVariation;
 extern byte curTrack;
