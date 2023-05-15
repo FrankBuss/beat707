@@ -17,7 +17,7 @@ public:
   template <class T> bool writeAnything(uint16_t page_number, uint8_t offset, const T& value, bool errorCheck = true);
   template <class T> bool readAnything(uint32_t address, T& value, bool fastRead = false);
   template <class T> bool readAnything(uint16_t page_number, uint8_t offset, T& value, bool fastRead = false);
-  bool     eraseSector(uint32_t address);
+  bool     eraseSectorAddress(uint32_t address);
   bool     eraseSector(uint16_t page_number, uint8_t offset);
   bool     eraseChip(void);
   int error() { return 0; }
@@ -38,7 +38,7 @@ template <class T> bool SPIFlash::writeAnything(uint32_t address, const T& value
       writeBufSz = (length<=maxBytes) ? length : maxBytes;
 
       for (uint16_t i = 0; i < writeBufSz; ++i) {
-        flash_content[address++] = *p++;
+        flash_content[address++] &= *p++;
       }
       data_offset += writeBufSz;
       length -= writeBufSz;

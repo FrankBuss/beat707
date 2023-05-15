@@ -3,17 +3,17 @@
 uint8_t flash_content[1024*1024*16];
 SPIFlash flash;
 
-bool SPIFlash::eraseSector(uint32_t address) 
+bool SPIFlash::eraseSectorAddress(uint32_t address) 
 {
-  for (int i = 0; i < 65536; i++) flash_content[address++] = 0xff;
-    
+  address >>= 8;
+  for (int i = 0; i < 4096; i++) flash_content[address++] = 0xff;
   return true;
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 bool SPIFlash::eraseSector(uint16_t page_number, uint8_t offset)
 {
-  return eraseSector(PAGESIZE * page_number + offset);
+  return eraseSectorAddress(PAGESIZE * page_number + offset);
 }
 
 bool SPIFlash::eraseChip()
